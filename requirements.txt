@@ -1,1 +1,5 @@
+selenium
+channels
 Django==3.0.4
+django-cors-headers
+webdriver-manager

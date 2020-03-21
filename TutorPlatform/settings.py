@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'chat',
+    'corsheaders',
     'Backend.apps.BackendConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,17 +57,20 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
-    '*'
+    'http://localhost:8080',
 )
 
+
+
+
 CORS_ALLOW_METHODS = (
-    'DELETE',
+    # 'DELETE',
     'GET',
-    'OPTIONS',
-    'PATCH',
+    # 'OPTIONS',
+    # 'PATCH',
     'POST',
-    'PUT',
-    'VIEW',
+    # 'PUT',
+    # 'VIEW',
 )
 
 CORS_ALLOW_HEADERS = (
@@ -105,7 +111,8 @@ STATICFILES_DIRS = [
 
 WSGI_APPLICATION = 'TutorPlatform.wsgi.application'
 
-
+# Channels
+ASGI_APPLICATION = 'TutorPlatform.routing.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -113,6 +120,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'TEST': {
+            'NAME': os.path.join(BASE_DIR, 'db_test.sqlite3')
+        }
     }
 }
 
