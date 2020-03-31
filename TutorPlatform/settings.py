@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'channels',
     'chat',
     'corsheaders',
-    'Backend.apps.BackendConfig',
+    'Backend',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
