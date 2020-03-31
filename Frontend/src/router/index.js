@@ -8,6 +8,7 @@ import CourseList from '@/Courses/CourseList'
 import Search from '@/Courses/Search'
 import HomePage from '@/Home/HomePage'
 import logo from '@/Home/Logo'
+import ShoppingCart from '@/Courses/ShopingCart'
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/logo',
       name: 'logo',
       component: logo
+    },
+    {
+      path: '/shopingCart',
+      name: 'shopingCart',
+      component: ShoppingCart
     }
   ]
 })
