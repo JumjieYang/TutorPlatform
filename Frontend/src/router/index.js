@@ -5,7 +5,6 @@ import Profile from '@/Profile/Profile'
 import Login from '@/Registration/Login'
 import SignUp from '@/Registration/Signup'
 import CourseList from '@/Courses/CourseList'
-import Rating from '@/Courses/Rating'
 import Search from '@/Courses/Search'
 import HomePage from '@/Home/HomePage'
 import logo from '@/Home/Logo'
@@ -38,11 +37,6 @@ export default new Router({
       path: '/Courses',
       name: 'Courses',
       component: CourseList
-    },
-    {
-      path: '/Rating',
-      name: 'Rating',
-      component: Rating
     },
     {
       path: '/Search',
