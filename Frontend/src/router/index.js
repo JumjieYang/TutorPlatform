@@ -30,8 +30,8 @@ export default new Router({
       component: Login
     },
     {
-      path: '/Signup',
-      name: 'Signup',
+      path: '/SignUp',
+      name: 'SignUp',
       component: SignUp
     },
     {

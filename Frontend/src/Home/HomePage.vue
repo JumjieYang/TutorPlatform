@@ -33,13 +33,11 @@
 
 <script>
   import Logo from './Logo'
-  import courses from '../Courses/CourseList'
   import tutorImage from './TutorImage'
   export default {
     name: 'Homepage',
     components:{
       Logo,
-      courses,
       tutorImage
     },
     data() {

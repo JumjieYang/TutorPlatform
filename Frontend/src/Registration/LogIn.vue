@@ -1,7 +1,11 @@
 <template>
-  <div class="login-container">
-    <el-form >
 
+  <div class="login-container">
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item :to="{ path: '/Home' }">Home Page</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/SignUp' }">Sign Up</el-breadcrumb-item>
+    </el-breadcrumb>
+    <el-form >
       <div class="title-container">
         <h3 class="title">Tutor Platform</h3>
       </div>
