@@ -5,7 +5,7 @@
       <div class="login-container">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item :to="{ path: '/Home' }">Home Page</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/SignUp' }">Login</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/Login' }">Login</el-breadcrumb-item>
         </el-breadcrumb>
         <el-form>
           <div class="title-container">

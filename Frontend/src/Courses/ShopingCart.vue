@@ -29,7 +29,6 @@
 
 <script>
   import Logo from '../Home/Logo'
-  // const goodOptions = ["哇哈哈", "辣条", "矿泉水", "西瓜", "苹果"];
   export default {
     name: "ShopingCart",
     components:{
