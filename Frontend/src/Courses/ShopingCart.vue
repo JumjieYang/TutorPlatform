@@ -1,132 +1,144 @@
 <template>
-  <el-container>
-    <el-header><Logo></Logo></el-header>
-    <br><br>
-    <el-main>
-      <div class="cart">
-      <div style="margin: 15px 0;"></div>
-      <el-checkbox-group v-model="checkedGoods" @change="handleOneChange" class="items">
-        <el-checkbox v-for="course in courses" :label="course.name" :key="course.id">
-          <span style="width:150px;display:inline-block">Course Number： {{course.name}}</span>
-          <span style="width:150px;display:inline-block;margin-left:100px;margin-right:100px">Course Price：$ {{course.price}}</span>
-          <span>
-            <i class ='el-icon-shopping-cart-1'></i>Quantity:
-            <el-input-number v-model="course.num" @change="handleChangeNum(course.id)" label="description" size="small"></el-input-number>
-          </span>
-          <span style="width:150px;display:inline-block;margin-left:100px;margin-right:100px">In total： ${{course.OnePrice}}</span>
-        </el-checkbox>
-      </el-checkbox-group>
-      <div style="margin-top:40px;margin-left:450px;text-align:left">
-        <span style="margin-right:20px;display:inline-block" v-model="allPrice">Total Price：$ {{allPrice}}</span>
-        <el-button type="primary" size="small" @click="submitBtn">Check Out<i class="el-icon-upload el-icon--right"></i></el-button>
-      </div>
-
-    </div>
-    </el-main>
-  </el-container>
-
+  <div id = 'app'>
+    <logo></logo>
+    <br><br><br>
+    <el-table :data="tableData" border style="width: 100%" @selection-change="selected">
+      <el-table-column type="selection" width="50"> </el-table-column>
+      <el-table-column label="Course Title" width="680">
+        <template scope="scope">
+          <div style="margin-left: 50px">
+            <span style="font-size: 18px;padding-left: 200px;">{{scope.row.title}}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Price" width="150" prop="price"> </el-table-column>
+      <el-table-column label="Quantity" width="200">
+        <template scope="scope">
+          <div>
+            <el-input v-model="scope.row.quantity" @change="handleInput(scope.row)">
+              <el-button slot="prepend" @click="del(scope.row)">
+                <i class="el-icon-minus"></i>
+              </el-button>
+              <el-button slot="append" @click="add(scope.row)">
+                <i class="el-icon-plus"></i>
+              </el-button>
+            </el-input>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="Total" width="150" prop="totalPrice"> </el-table-column>
+      <el-table-column label="Edit">
+        <template scope="scope">
+          <el-button type="danger" @click="handleDelete(scope.$index, scope.row)"> Delete
+            <i class="el-icon-delete2 el-icon--right"></i>
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table> <br>
+    <el-button type="info" >{{"Total Price：" + moneyTotal}}</el-button>
+    <el-button type="primary" style="float: right" size="small" @click="submitBtn">Check Out<i class="el-icon-upload el-icon--right"></i></el-button>
+  </div>
 </template>
-
 <script>
   import Logo from '../Home/Logo'
   export default {
     name: "ShopingCart",
-    components:{
+    components: {
       Logo
     },
     data() {
       return {
-        courses: [
+        tableData: [
           {
-            id: 1,
-            name: "Comp421",
-            price: 32
+
+            title: 'Comp421 Final Review',
+            price: 149,
+            quantity: 1,
+            totalPrice: 149,
           },
           {
-            id: 2,
-            name: "Comp307",
-            price: 12
+
+            title: 'Comp307 Project Help',
+            price: 29,
+            quantity: 1,
+            totalPrice: 29,
           },
           {
-            id: 3,
-            name: "Math323",
-            price: 2
+            title: 'Math324 Final Practice',
+            price: 14.9,
+            quantity: 1,
+            totalPrice: 14.9,
           },
           {
-            id: 4,
-            name: "Comp251",
-            price: 60
-          },
-          {
-            id: 5,
-            name: "Math324",
-            price: 99
+            title: 'ECSE321 Assignment Debug',
+            price: 79,
+            quantity: 1,
+            totalPrice: 79,
           }
         ],
-        checkAll: false,
-        isIndeterminate: true,
-        checkedGoods: [],
-        allPrice: 0
-      };
+        moneyTotal: 0,
+        multipleSelection: [],
+      }
     },
     methods: {
-      handleAllChange(val) {
-        console.log(val, "555");
-        this.checkedGoods = val ? goodOptions : [];
-        this.isIndeterminate = false;
-        if (val) {
-          this.getAllPrice();
-        } else {
-          this.allPrice = 0;
+      handleDelete(index, row) {
+        this.$confirm('Are you sure about delete that course？', 'Warning', {
+          confirmButtonText: 'confirm',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.tableData.splice(index,1);
+          this.$message({type: 'success', message: 'Deletion success!'});
+        }).catch(() => {
+          this.$message({type: 'info', message: 'Deletion canceled'});
+        });
+      },
+      handleInput: function (value) {
+        if (null == value.quantity || value.quantity == "") {
+          value.quantity = 1;
+        }
+        if(value.quantity < 0){
+          this.$message({type: 'info', message: 'Negative Quantity is not allowed'});
+          value.quantity = 0;
+        }
+        value.totalPrice = (value.quantity * value.price);
+        this.selected(this.multipleSelection);
+      },
+      add: function (addGood) {
+        //v-model achive double data bind
+        if (typeof addGood.quantity == 'string') {
+          addGood.quantity = parseInt(addGood.quantity);
+        };
+        addGood.quantity += 1;
+        addGood.totalPrice += addGood.price;
+      },
+      del: function (delGood) {
+        // parse string input to integer first
+        if (typeof delGood.quantity == 'string') {
+          delGood.quantity = parseInt(delGood.quantity);
+        }
+        ;
+        if (delGood.quantity > 0) {
+          delGood.quantity -= 1;
+          delGood.totalPrice -= delGood.price;
         }
       },
-      handleOneChange(value) {
-        let all = 0;
-        let checkedCount = value.length;
-        this.checkAll = checkedCount === this.checkedGoods.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.checkedGoods.length;
-        value.filter((it, id) => {
-          if (it == this.courses[id].name) {
-            if (this.courses[id].price) {
-              all += this.courses[id].price;
-            }
+      selected: function (selection) {
+        this.multipleSelection = selection;
+        this.moneyTotal = 0;
+        for (let i = 0; i < selection.length; i++) {
+          //to see if the return data tyoe is string
+          if (typeof selection[i].totalPrice == 'string') {
+            selection[i].totalPrice = parseInt(selection[i].totalPrice);
           }
-        });
-        this.allPrice = all;
-      },
-      handleChangeNum(val) {
-        this.courses.filter((it, id) => {
-          if (it.id == val) {
-            it.OnePrice = it.num * it.price;
-          }
-        });
-        this.getAllPrice();
-      },
-      getAllPrice() {
-        // encapsulate getTotal Price
-        let money = 0;
-        this.courses.filter((it, id) => {
-          if (it.OnePrice) {
-            money += it.OnePrice;
-          }
-        });
-        this.allPrice = money;
-      },
-      submitBtn() {
-        this.$alert( "$"+this.allPrice, "The total price will be",{
-          confirmButtonText: "Confirm",
-          callback: action => {
-            this.$message({
-              type: "info",
-              message: ""
-            });
-          }
-        });
+          ;
+          this.moneyTotal += selection[i].totalPrice;
+
+        }
       }
     }
   }
 </script>
 
-<style scoped>
-
+<style>
 </style>
