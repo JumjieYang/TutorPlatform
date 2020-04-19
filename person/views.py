@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate
-from rest_framework import generics, status, permissions
+from rest_framework import generics, status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 

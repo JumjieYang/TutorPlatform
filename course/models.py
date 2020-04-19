@@ -12,4 +12,8 @@ class Course(models.Model):
     number = models.IntegerField()
     term = models.CharField(max_length=6)
     description = models.CharField(max_length=100)
-    tutor = models.ForeignKey(User, on_delete=CASCADE)
+    tutor = models.ForeignKey(User, on_delete=CASCADE, null=True)
+
+class ShoppingCart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    courseList = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)

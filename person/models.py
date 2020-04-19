@@ -12,3 +12,4 @@ class Profile(models.Model):
     price = models.FloatField(null=True)
     phoneNumber = models.CharField(max_length=10)
     image = models.ImageField(null=True)
+

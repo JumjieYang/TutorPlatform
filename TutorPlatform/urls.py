@@ -17,13 +17,13 @@ from django.contrib import admin
 from django.conf.urls import url, include
 from django.urls import path
 
-from rest_framework_swagger.views import get_swagger_view
 from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('api-user/',include('person.urls')),
+    path('api-course/', include('course.urls')),
+    path('api-order/', include('orderhistory.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('swagger-docs/', get_swagger_view(title='TutorPlatform API')),
-    path('docs/', include_docs_urls(title='TutorPlatform API', authentication_classes=[], permission_classes=[])),
+    path('docs/', include_docs_urls(title='TutorPlatform APIs', authentication_classes=[], permission_classes=[])),
 
 ]

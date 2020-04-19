@@ -33,7 +33,6 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_swagger',
     'channels',
     'chat',
     'person',
@@ -68,12 +67,12 @@ CORS_ORIGIN_WHITELIST = (
 
 
 CORS_ALLOW_METHODS = (
-    # 'DELETE',
+    'DELETE',
     'GET',
     # 'OPTIONS',
-    # 'PATCH',
+    'PATCH',
     'POST',
-    # 'PUT',
+    'PUT',
     # 'VIEW',
 )
 
