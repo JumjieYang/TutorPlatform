@@ -4,9 +4,11 @@ from django.db import models
 
 # Create your models here.
 class Profile(models.Model):
-    person = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    firstName = models.CharField(max_length=10)
+    lastName = models.CharField(max_length=10)
     age = models.IntegerField()
     isAvailable = models.BooleanField(default=False)
-    price = models.FloatField(default=0)
+    price = models.FloatField(blank=True)
     phoneNumber = models.CharField(max_length=10)
-    image = models.ImageField(null=True)
+    image = models.ImageField(blank=True)

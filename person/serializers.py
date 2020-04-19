@@ -3,10 +3,10 @@ from .models import *
 from rest_framework.authtoken.models import Token
 
 
-class PersonSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username','password')
+        fields = ('username', 'password')
         extra_kwargs = {
             'password': {'write_only': True},
         }
@@ -17,3 +17,9 @@ class PersonSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.create(user=user)
         return user
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'

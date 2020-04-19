@@ -1,14 +1,14 @@
 from django.contrib.auth import authenticate
-from rest_framework import generics, status
-from rest_framework.authtoken.models import Token
+from rest_framework import generics, status, permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from .serializers import PersonSerializer
+from .serializers import *
 
 
 # Create your views here.
-class CreateView(generics.CreateAPIView):
+class CreateUserView(generics.CreateAPIView):
     name = 'person_create'
 
     def get_authenticators(self):
@@ -18,7 +18,7 @@ class CreateView(generics.CreateAPIView):
         return ()
 
     def get_serializer_class(self):
-        return PersonSerializer
+        return UserSerializer
 
 
 class LoginView(ObtainAuthToken):
@@ -33,10 +33,12 @@ class LoginView(ObtainAuthToken):
         user = authenticate(username=username, password=password)
         if user:
             token, created = Token.objects.get_or_create(user=user)
+            print(user)
             return Response(
                 data={
                     'token': token.key,
-                    'username': user.username
+                    'username': user.username,
+                    'user_id': user.id
                 }
             )
         else:
@@ -46,3 +48,15 @@ class LoginView(ObtainAuthToken):
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+
+class CreateProfileView(generics.CreateAPIView):
+    def get_serializer_class(self):
+        return ProfileSerializer
+
+    permission_classes = [permissions.IsAuthenticated, ]
+
+
+class ProfileDetailView(generics.RetrieveUpdateAPIView):
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
