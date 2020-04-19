@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
+from django.urls import path
+
+from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
-    url('admin/', admin.site.urls)
+    path('api-user/',include('person.urls')),
+    path('api-course/', include('course.urls')),
+    path('api-order/', include('orderhistory.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('docs/', include_docs_urls(title='TutorPlatform APIs', authentication_classes=[], permission_classes=[])),
+
 ]

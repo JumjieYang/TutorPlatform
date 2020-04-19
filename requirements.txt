@@ -3,3 +3,8 @@ channels
 Django==3.0.4
 django-cors-headers
 webdriver-manager
+djangorestframework
+Pillow
+djangorestframework-jwt
+coreapi
+django-rest-swagger

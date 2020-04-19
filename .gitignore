@@ -1,4 +1,6 @@
 TutorPlatform/__pycache__
-Backend/__pycache__
+person/__pycache__
+orderhistory/__pycache__
+course/__pycache__
 chat/__pycache__
 venv
