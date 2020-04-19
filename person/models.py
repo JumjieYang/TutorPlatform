@@ -9,6 +9,6 @@ class Profile(models.Model):
     lastName = models.CharField(max_length=10)
     age = models.IntegerField()
     isAvailable = models.BooleanField(default=False)
-    price = models.FloatField(blank=True)
+    price = models.FloatField(null=True)
     phoneNumber = models.CharField(max_length=10)
-    image = models.ImageField(blank=True)
+    image = models.ImageField(null=True)

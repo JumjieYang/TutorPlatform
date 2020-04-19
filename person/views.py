@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate
 from rest_framework import generics, status, permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from .serializers import *
 
@@ -21,6 +20,21 @@ class CreateUserView(generics.CreateAPIView):
         return UserSerializer
 
 
+class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        user = User.objects.get(username=request.data['username'])
+        user.set_password(request.data['password'])
+        user.save()
+        return Response(
+            data={
+                'username': user.username
+            }
+        )
+
+
 class LoginView(ObtainAuthToken):
     name = 'login'
 
@@ -33,7 +47,6 @@ class LoginView(ObtainAuthToken):
         user = authenticate(username=username, password=password)
         if user:
             token, created = Token.objects.get_or_create(user=user)
-            print(user)
             return Response(
                 data={
                     'token': token.key,
