@@ -5,15 +5,25 @@
       <h1>McGill Tutor Platform</h1>
     </el-header>
     <br><br><br><br><br><br><br>
+    <h2 style="align-self: flex-start">Search Bar</h2>
+    <div @click="refresh" >
+      <i class="el-icon-refresh">refresh courses list</i>
+    </div>
+    <el-autocomplete
+      v-model="state"
+      :fetch-suggestions="querySearchAsync"
+      placeholder="type the course information"
+      @select="handleSelect"
+      @click = "handleClick"
+    ></el-autocomplete>
     <el-table
-      cell-style="font-weight: 700"
-      :data="courseInfo"
+      :data="displayList"
       height="350"
       border
       style="width: 100%">
       <div class = 'courseNum'>
         <el-table-column
-          prop="course"
+          prop="value"
           label="Course_Number"
           width="250">
         </el-table-column>
@@ -27,9 +37,9 @@
         <el-table-column
           prop="evaValue"
           label="Rating"
-          score-template="{value}">
+          score-template="{rating}">
           <template slot-scope="scope">
-            <el-rate v-model="scope.row.value" :allow-half="true"  show-score disabled text-color="#ff9900"></el-rate>
+            <el-rate v-model="scope.row.rating" :allow-half="true"  show-score disabled text-color="#ff9900"></el-rate>
           </template>
         </el-table-column>
         <el-table-column
@@ -46,35 +56,79 @@
 </template>
 <script>
   import Logo from '../Home/Logo'
+  import Search from "./Search";
   export default {
     components:{
-      Logo
+      Logo,
+      Search
     },
     data() {
       return {
-        courseInfo: [{
-          course: 'Comp421',
+        courses: [{
+          value: 'Comp421',
           tutor: 'Stephen',
-          value: 3,
+          rating: 3,
           url: '/'
         }, {
-          course: 'Comp307',
+          value: 'Comp307',
           tutor: 'Kevin',
-          value: 4,
+          rating: 4,
           url: '/'
         }, {
-          course: 'Math223',
+          value: 'Math223',
           tutor: 'Donald',
-          value: 5,
+          rating: 5,
           url: '/'
         }, {
-          course: 'Ecse321',
+          value: 'Ecse321',
           tutor: 'Lee',
-          value: 4.3,
+          rating: 4.3,
           url: '../search'
         }],
-
+        state: '',
+        timeout:  null,
+        displayList: []
       }
-    }
+    },
+    methods: {
+      // these are test data
+      loadAll() {
+        return [
+          { "value": "Comp421", "tutor": "Lee" },
+          { "value": "Comp307", "tutor": "Cornell" },
+          { "value": "Math323", "tutor": "Kobe" }
+        ];
+      },
+      querySearchAsync(queryString, cb) {
+        let courses = this.courses;
+        let results = queryString ? courses.filter(this.createStateFilter(queryString)) : courses;
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          cb(results);
+        }, 300 * Math.random());
+      },
+      createStateFilter(queryString) {
+        return (state) => {
+          return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        };
+      },
+      handleSelect(item) {
+        this.displayList = [];
+        this.displayList.push(item);
+        console.log(item);
+      },
+      handleClick() {
+        this.displayList = this.courses;
+      },
+      refresh(){
+        this.displayList = [];
+        for(let i = 0; i < this.courses.length; ++i){
+          this.displayList.push(this.courses[i]);
+          console.log(this.displayList[i]);
+        }
+      }
+
+    },
   }
 </script>
