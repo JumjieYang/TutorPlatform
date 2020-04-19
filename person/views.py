@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate
 from rest_framework import generics, status
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from django.contrib.auth.models import User
 
 from .serializers import PersonSerializer
 
@@ -21,26 +21,28 @@ class CreateView(generics.CreateAPIView):
         return PersonSerializer
 
 
-class LoginView(APIView):
+class LoginView(ObtainAuthToken):
     name = 'login'
 
     def get_permissions(self):
         return ()
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         username = request.data.get('username')
         password = request.data.get('password')
         user = authenticate(username=username, password=password)
         if user:
+            token, created = Token.objects.get_or_create(user=user)
             return Response(
                 data={
-                    'token': user.auth_token.key,
+                    'token': token.key,
+                    'username': user.username
                 }
             )
         else:
             return Response(
                 data={
-                    'error': '认证失败，请确认账号和密码是否正确',
+                    'error': 'Login failed',
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
