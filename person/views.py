@@ -34,6 +34,9 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
             }
         )
 
+    def get_queryset(self):
+        return self.queryset.filter(username=self.request.username)
+
 
 class LoginView(ObtainAuthToken):
     name = 'login'
@@ -67,9 +70,10 @@ class CreateProfileView(generics.CreateAPIView):
     def get_serializer_class(self):
         return ProfileSerializer
 
-    permission_classes = [permissions.IsAuthenticated, ]
-
 
 class ProfileDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
