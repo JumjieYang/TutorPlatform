@@ -13,7 +13,7 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CourseSerializer
 
 
-class CourseList(generics.ListAPIView):
+class CourseList(generics.ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
@@ -22,6 +22,7 @@ class CourseList(generics.ListAPIView):
 
     def get_permissions(self):
         return ()
+
 
 class CreateCart(generics.CreateAPIView):
     queryset = ShoppingCart.objects.all()

@@ -35,35 +35,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
         )
 
     def get_queryset(self):
-        return self.queryset.filter(username=self.request.username)
-
-
-class LoginView(ObtainAuthToken):
-    name = 'login'
-
-    def get_permissions(self):
-        return ()
-
-    def post(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        user = authenticate(username=username, password=password)
-        if user:
-            token, created = Token.objects.get_or_create(user=user)
-            return Response(
-                data={
-                    'token': token.key,
-                    'username': user.username,
-                    'user_id': user.id
-                }
-            )
-        else:
-            return Response(
-                data={
-                    'error': 'Login failed',
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        return self.queryset.filter(username=self.request.user)
 
 
 class CreateProfileView(generics.CreateAPIView):

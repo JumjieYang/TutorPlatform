@@ -11,6 +11,12 @@ class OrderList(generics.ListCreateAPIView):
     def get_serializer_class(self):
         return OrderHistorySerializer
 
+    def get_queryset(self):
+        if self.kwargs['owner']:
+            return OrderHistory.objects.filter(owner=self.kwargs['owner']).order_by('id')
+        else:
+            return OrderHistory.objects.all()
+
 
 class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = OrderHistory.objects.all()
@@ -19,4 +25,4 @@ class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
         return OrderHistorySerializer
 
     def get_queryset(self):
-        return self.queryset.filter(owner=self.request.owner)
+        return self.queryset.all()
