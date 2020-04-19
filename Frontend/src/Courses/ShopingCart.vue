@@ -135,6 +135,9 @@
           this.moneyTotal += selection[i].totalPrice;
 
         }
+      },
+      submitBtn: function (){
+
       }
     }
   }
