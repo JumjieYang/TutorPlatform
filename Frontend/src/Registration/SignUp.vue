@@ -15,17 +15,16 @@
           <el-form-item>
             <el-input
               placeholder="Username"
+              v-model="username" 
               type="text"
-              @keyup.enter = 'submit'
             />
           </el-form-item>
 
           <el-tooltip placement="right" manual>
-            <el-form-item prop="password">
+            <el-form-item >
               <el-input
                 placeholder="Password"
-                name="password"
-                @keyup.enter = "submit"
+                v-model="password"
               />
             </el-form-item>
           </el-tooltip>
@@ -47,6 +46,8 @@
     },
     data() {
       return {
+        username: '',
+        password: '',
         activeIndex: '1',
         activeIndex2: '1',
       };

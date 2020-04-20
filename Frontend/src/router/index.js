@@ -9,7 +9,11 @@ import Search from '@/Courses/Search'
 import HomePage from '@/Home/HomePage'
 import logo from '@/Home/Logo'
 import ShoppingCart from '@/Courses/ShopingCart'
+<<<<<<< HEAD
+import Chat from '@/Chat/test'
+=======
 import CourseDetail from "../Courses/CourseDetail";
+>>>>>>> 8c793b68a64e9dfa543aba2943e5f9e10c740051
 
 Vue.use(Router)
 
@@ -19,6 +23,11 @@ export default new Router({
       path: '/',
       name: 'Hello',
       component: Hello
+    },
+    {
+      path: '/Chat',
+      name: 'Chat',
+      component: Chat
     },
     {
       path: '/Profile',
