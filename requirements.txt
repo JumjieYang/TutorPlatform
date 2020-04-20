@@ -5,6 +5,7 @@ django-cors-headers
 webdriver-manager
 djangorestframework
 Pillow
-djangorestframework-jwt
 coreapi
 django-rest-swagger
+channels-redis
+redis

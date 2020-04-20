@@ -24,7 +24,7 @@ urlpatterns = [
     path('api-course/', include('course.urls')),
     path('api-order/', include('orderhistory.urls')),
     path('api-auth/', include('auth.urls')),
-    path('',include('chat.urls')),
+    path('chat/',include('chat.urls')),
     path('docs/', include_docs_urls(title='TutorPlatform APIs', authentication_classes=[], permission_classes=[])),
 
 ]

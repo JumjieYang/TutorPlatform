@@ -12,12 +12,14 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
 
     def update(self, request, *args, **kwargs):
-        user = User.objects.get(username=request.data['username'])
+        user = request.user
         user.set_password(request.data['password'])
         user.save()
+        request.user.auth_token.delete()
         return Response(
             data={
-                'username': user.username
+                'username': user.username,
+                'message': 'Please login again'
             }
         )
 
