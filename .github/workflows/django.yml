@@ -7,8 +7,21 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  runner-job:
+    # You must use a Linux environment when using service containers or container jobs
+    runs-on: ubuntu-latest
 
+    # Service containers to run with `runner-job`
+    services:
+      # Label used to access the service container
+      redis:
+        # Docker Hub image
+        image: redis
+        #
+        ports:
+          # Opens tcp port 6379 on the host and service container
+          - 6379:6379
+  build:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
