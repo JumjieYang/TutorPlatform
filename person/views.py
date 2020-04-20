@@ -1,14 +1,13 @@
 from django.contrib.auth import authenticate
 from rest_framework import generics, status
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from django.contrib.auth.models import User
 
-from .serializers import PersonSerializer
+from .serializers import *
 
 
 # Create your views here.
-class CreateView(generics.CreateAPIView):
+class CreateUserView(generics.CreateAPIView):
     name = 'person_create'
 
     def get_authenticators(self):
@@ -18,29 +17,35 @@ class CreateView(generics.CreateAPIView):
         return ()
 
     def get_serializer_class(self):
-        return PersonSerializer
+        return UserSerializer
 
 
-class LoginView(APIView):
-    name = 'login'
+class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
-    def get_permissions(self):
-        return ()
+    def update(self, request, *args, **kwargs):
+        user = User.objects.get(username=request.data['username'])
+        user.set_password(request.data['password'])
+        user.save()
+        return Response(
+            data={
+                'username': user.username
+            }
+        )
 
-    def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        user = authenticate(username=username, password=password)
-        if user:
-            return Response(
-                data={
-                    'token': user.auth_token.key,
-                }
-            )
-        else:
-            return Response(
-                data={
-                    'error': '认证失败，请确认账号和密码是否正确',
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+    def get_queryset(self):
+        return self.queryset.filter(username=self.request.user)
+
+
+class CreateProfileView(generics.CreateAPIView):
+    def get_serializer_class(self):
+        return ProfileSerializer
+
+
+class ProfileDetailView(generics.RetrieveUpdateAPIView):
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)

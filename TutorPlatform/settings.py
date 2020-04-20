@@ -33,7 +33,6 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_swagger',
     'channels',
     'chat',
     'person',
@@ -68,12 +67,12 @@ CORS_ORIGIN_WHITELIST = (
 
 
 CORS_ALLOW_METHODS = (
-    # 'DELETE',
+    'DELETE',
     'GET',
     # 'OPTIONS',
-    # 'PATCH',
+    'PATCH',
     'POST',
-    # 'PUT',
+    'PUT',
     # 'VIEW',
 )
 
@@ -173,10 +172,12 @@ STATICFILES_DIRS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.TokenAuthentication',
-                                       'rest_framework.authentication.SessionAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
                                        ),
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',
                                    ),
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
