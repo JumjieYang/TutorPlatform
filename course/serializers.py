@@ -7,7 +7,9 @@ class CourseSerializer(serializers.ModelSerializer):
         model = Course
         fields = '__all__'
 
+
 class CartSerializer(serializers.ModelSerializer):
+    courseList = CourseSerializer(many=True)
     class Meta:
         model = ShoppingCart
         fields = '__all__'
