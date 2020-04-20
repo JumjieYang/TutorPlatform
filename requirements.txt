@@ -8,4 +8,3 @@ Pillow
 coreapi
 django-rest-swagger
 channels-redis
-redis

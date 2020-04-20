@@ -14,10 +14,14 @@ class Course(models.Model):
     time_chosed = models.IntegerField(default=0)
     description = models.CharField(max_length=100)
     isAvailable = models.BooleanField(default=False)
-    price = models.FloatField(null=True)
+    price = models.FloatField(default=0)
     tutor = models.ForeignKey(User, on_delete=CASCADE, null=True)
 
 
 class ShoppingCart(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    courseList = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+    id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, to_field='id')
+    number = models.IntegerField(default=0)
+    total = models.IntegerField(default=0)
+

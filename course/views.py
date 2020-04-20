@@ -13,7 +13,7 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CourseSerializer
 
 
-class CourseList(generics.ListCreateAPIView):
+class CourseList(generics.ListAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
@@ -29,6 +29,9 @@ class CreateCart(generics.ListCreateAPIView):
 
     def get_serializer_class(self):
         return CartSerializer
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
 
 
 class CartDetail(generics.RetrieveUpdateDestroyAPIView):

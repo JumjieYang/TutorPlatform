@@ -87,12 +87,14 @@ class Test_person(APITestCase):
 
     def test_delete_user(self):
         url = reverse('user_detail', args=[1])
+        self.assertEqual(User.objects.count(),2)
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         try:
             User.objects.get(username='testUser')
         except Exception as e:
             self.assertEqual("User matching query does not exist.", e.__str__())
+        self.assertEqual(User.objects.count(),1)
 
     def test_profile(self):
         url = reverse('create_profile')

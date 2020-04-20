@@ -5,8 +5,6 @@ from .models import *
 
 
 class OrderHistorySerializer(serializers.ModelSerializer):
-    courseList = CourseSerializer(many=True)
-
     class Meta:
         model = OrderHistory
         fields = '__all__'
