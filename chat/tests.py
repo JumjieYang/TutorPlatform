@@ -13,7 +13,11 @@ class ChatTests(ChannelsLiveServerTestCase):
         super().setUpClass()
         try:
             # NOTE: Requires "chromedriver" binary to be installed in $PATH
-            cls.driver = webdriver.Chrome(ChromeDriverManager().install())
+            chrome_options = Options()
+            chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--no-sandbox')
+            chrome_options.add_argument('--disable-dev-shm-usage')
+            cls.driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
         except:
             super().tearDownClass()
             raise
