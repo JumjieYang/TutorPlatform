@@ -2,51 +2,56 @@
     <div>
         <el-collapse v-model="activeNames" @change="handleChange" accordion>
 
-            <el-collapse-item title="Reset password" name="1">
+            <el-collapse-item title="Post a course" name="1">
                 <el-card class="box-card">
-                    <el-form class="reset-password" style="margin-top:10px;">
+                    <el-form style="margin-top:10px;">
                         <el-form-item>
                         <el-input
-                            placeholder="Username"
-                            v-model="username" 
+                            placeholder="Course subject"
+                            v-model="subject" 
                             type="text"
                         />
                         </el-form-item>
 
-                        <el-tooltip placement="right" manual>
                         <el-form-item >
                             <el-input
-                            placeholder="Password"
-                            v-model="password"
+                            placeholder="Course number"
+                            v-model="number"
                             />
                         </el-form-item>
-                        </el-tooltip>
+
+                        <el-form-item >
+                            <el-input
+                            placeholder="Course description"
+                            v-model="description"
+                            />
+                        </el-form-item>
                     </el-form>
-                    <el-button class="reset-password" type="primary" style="width:50%; margin-bottom:10px;"  @click="submitReset">submit</el-button>
+                    <el-button class="reset-password" type="primary" style="width:50%; margin-bottom:10px;"  @click="submitPost">submit</el-button>
                 </el-card>
             </el-collapse-item>
 
-            <el-collapse-item title="Email Setting" name="2">
+            <el-collapse-item title="Set price" name="2">
                 <el-card class="box-card">
                     <el-form class="reset-password" style="margin-top:30px;">
                         <el-form-item>
                         <el-input
-                            placeholder="New email"
-                            v-model="email" 
+                            placeholder="What is your rate (per hour)?"
+                            v-model="price" 
                             type="text"
                         />
                         </el-form-item>
                     </el-form>
-                    <el-button class="reset-password" type="primary" style="width:50%; margin-bottom:30px;"  @click="submitEmail">submit</el-button>
+                    <el-button class="reset-password" type="primary" style="width:50%; margin-bottom:30px;"  @click="submitPrice">submit</el-button>
                 </el-card>
             </el-collapse-item>
 
 
-            <el-collapse-item title="Role setting" name="3">
-                <el-col :span="20" style="text-align: left; margin-bottom:10px;">Become a tutor</el-col>
+            <el-collapse-item title="set availability" name="3">
+                <el-col :span="20" style="text-align: left; margin-bottom:10px;">Are you available to provide tutor services?</el-col>
                 <el-col :span="4">
                     <el-switch
-                        v-model="becomeTutor">
+                        v-model="availability">
                     </el-switch>
                 </el-col>
             </el-collapse-item>
@@ -79,10 +84,11 @@
 export default {
      data() {
         return {
-            username: '',
-            password: '',
-            email:'',
-            becomeTutor:'',
+            courseName: '',
+            number : '',
+            description: '',
+            price:'',
+            availability:'',
             activeNames: ['0']
         }
     },
@@ -90,31 +96,29 @@ export default {
         handleChange(val) {
             console.log(val);
         },
-        submitEmail(){
+        submitPost(){
             if(true){
                 this.$message({
                     message: 'Sussess!',
                     type: 'success'
                 });
                 this.activeNames = ['0'];
-                this.email = '';
+                this.courseName = '';
+                this.number = '';
+                this.description = '';
             }
             else{
                 this.$message.error('Please try again.');
             }
         },
-        submitReset(){
-            // this.axios.get("http://localhost:8000/api-user/profile/{user}/").then((response) => {
-            //     console.log(response.data)
-            // })
+        submitPrice(){
             if(true){
                 this.$message({
                     message: 'Sussess!',
                     type: 'success'
                 });
                 this.activeNames = ['0'];
-                this.username = '';
-                this.password = '';
+                this.price = '';
             }
             else{
                 this.$message.error('Please try again.');
@@ -128,7 +132,7 @@ export default {
         }
     },
     watch: {
-        becomeTutor: function () {
+        availability: function () {
             if(true){
                 this.$message({
                     message: 'Sussess!',

@@ -13,11 +13,18 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "@progress/kendo-chat-vue-wrapper": "^2020.1.406",
+    "@progress/kendo-theme-default": "^4.17.0",
+    "@progress/kendo-ui": "^2020.1.406",
+    "axios": "^0.19.2",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "latest",
     "element-ui": "^2.13.0",
+    "jquery": "^3.5.0",
     "popper.js": "^1.12.9",
     "vue": "^2.5.2",
+    "vue-axios": "^2.1.5",
+    "vue-jquery": "^1.0.6",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

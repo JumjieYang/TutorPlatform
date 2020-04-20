@@ -7,6 +7,7 @@
           <el-breadcrumb-item :to="{ path: '/Home' }">Home Page</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/SignUp' }">Sign Up</el-breadcrumb-item>
         </el-breadcrumb>
+
         <el-form>
           <div class="title-container">
             <h3 class="title">Tutor Platform</h3>
@@ -15,20 +16,21 @@
           <el-form-item>
             <el-input
               placeholder="Username"
+              v-model="username" 
               type="text"
             />
           </el-form-item>
 
           <el-tooltip placement="right" manual>
-            <el-form-item prop="password">
+            <el-form-item >
               <el-input
                 placeholder="Password"
-                name="password"
+                v-model="password"
               />
             </el-form-item>
           </el-tooltip>
         </el-form>
-        <el-button type="primary" style="width:100%;margin-bottom:30px;"  @click="submit" @keyup.enter = 'submit'>Login</el-button>
+        <el-button type="primary" style="width:100%;margin-bottom:30px;"  @click="submit">Login</el-button>
 
       </div>
     </el-main>
@@ -45,6 +47,8 @@
     },
     data() {
       return {
+        username: '',
+        password: '',
         activeIndex: '1',
         activeIndex2: '1',
       };

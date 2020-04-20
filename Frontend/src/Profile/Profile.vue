@@ -18,6 +18,9 @@
                 <account-setting/>
               </el-tab-pane> 
 
+              <el-tab-pane label="Tutor Setting" name="tutorsetting">
+                <tutor-setting/>
+              </el-tab-pane> 
             </el-tabs>
           </el-card>
         </el-col>
@@ -30,13 +33,15 @@
 <script>
 import UserCard from './UserCard'
 import AccountSetting from './AccountSetting'
+import TutorSetting from './TutorSetting'
 import OrderHistory from './OrderHistory'
 export default {
   name: 'Profile',
   components: { 
     UserCard,
     OrderHistory,
-    AccountSetting
+    AccountSetting,
+    TutorSetting
   },
   data() {
     return {
