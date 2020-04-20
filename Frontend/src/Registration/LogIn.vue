@@ -25,6 +25,7 @@
             <el-form-item >
               <el-input
                 placeholder="Password"
+                type="password"
                 v-model="password"
               />
             </el-form-item>
@@ -39,7 +40,9 @@
 </template>
 
 <script>
-  import Logo from '../Home/Logo'
+  import Logo from '../Home/Logo'   
+  import router from './../router/index' 
+
   export default {
     name: 'Homepage',
     components: {
@@ -55,8 +58,19 @@
     },
     methods:{
       submit() {
-        console.log(666)
-      }
+            const vm = this;
+            //console.log(666);
+            this.$store.dispatch('retrieveToken',  {
+                username: this.username,
+                password: this.password
+            })
+            .then(function (response) {
+                vm.$router.push('/Home')
+            })
+            .catch(function (error) {
+                vm.$message.error('Please try again.');
+            });
+        }
     }
   }
 </script>

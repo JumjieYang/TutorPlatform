@@ -10,16 +10,42 @@ import router from './router'
 import { Chat, ChatInstaller } from '@progress/kendo-chat-vue-wrapper'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import {store} from './store/store'
 
 Vue.use(Element)
 Vue.use(ChatInstaller)
 Vue.use(VueAxios, axios)
+
 Vue.config.productionTip = false
+Vue.config.devtools = true;
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.loggedIn) {
+      next({
+        path: '/Login',
+      })
+    } else {
+      next()
+    }
+  } else if (to.matched.some(record => record.meta.requiresVisitor)) {
+    if (store.getters.loggedIn) {
+      next({
+        path: '/Home',
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App, Chat }
 })

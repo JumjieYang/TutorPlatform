@@ -24,6 +24,7 @@
             <el-form-item >
               <el-input
                 placeholder="Password"
+                type="password"
                 v-model="password"
               />
             </el-form-item>
@@ -39,23 +40,42 @@
 
 <script>
   import Logo from '../Home/Logo'
+
   export default {
     name: 'Homepage',
     components: {
-      Logo
+        Logo
     },
     data() {
-      return {
-        username: '',
-        password: '',
-        activeIndex: '1',
-        activeIndex2: '1',
-      };
+        return {
+            username: '',
+            password: '',
+            activeIndex: '1',
+            activeIndex2: '1',
+        };
     },
     methods:{
-      submit() {
-        console.log(666)
-      }
-    }
+        submit() {
+            console.log(666);
+            const vm = this;
+            this.axios.post("http://localhost:8000/api-auth/register/", {
+                username: this.username,
+                password: this.password
+            })
+            .then(function (response) {
+                console.log(response);
+                vm.$router.push('/Login')
+                vm.$message({
+                    message: 'Sign up sussessfully! Please log in.',
+                    type: 'success'
+                });
+            })
+            .catch(function (error) {
+                vm.$message.error('Error. Maybe you entered a existing username.');
+                console.log(error);
+            });
+        }
+    },
+
   }
 </script>

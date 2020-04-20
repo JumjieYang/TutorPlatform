@@ -83,7 +83,7 @@ export default {
             password: '',
             email:'',
             becomeTutor:'',
-            activeNames: ['0']
+            activeNames: ['0'],
         }
     },
     methods: {
@@ -91,6 +91,32 @@ export default {
             console.log(val);
         },
         submitEmail(){
+            // const base = {
+            //     baseURL: this.$store.state.endpoints.baseUrl,
+            //     headers: {
+            //         Authorization: this.$store.state.token,
+            //         'Content-Type': 'application/json'
+            //     },
+            //     xhrFields: {
+            //         withCredentials: true
+            //     }
+            // };
+            // const axiosInstance = axios.create(base)
+            // axiosInstance({
+            //     url: "/user/",
+            //     method: "get",
+            //     params: {}
+            // })
+            // .then((response) => {
+            //     this.$store.commit("setAuthUser",
+            //         {authUser: response.data, isAuthenticated: true}
+            //     )
+            //     this.$router.push({name: 'Home'})
+            // })
+            // .catch((error) => {
+            //     console.log(error);
+            // })
+
             if(true){
                 this.$message({
                     message: 'Sussess!',
