@@ -11,6 +11,7 @@ class Course(models.Model):
     subject = models.CharField(max_length=4)
     number = models.IntegerField()
     term = models.CharField(max_length=6)
+    rating = models.FloatField(default=0)
     time_chosed = models.IntegerField(default=0)
     description = models.CharField(max_length=100)
     isAvailable = models.BooleanField(default=False)
