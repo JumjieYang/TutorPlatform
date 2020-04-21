@@ -8,6 +8,7 @@
     <br><br><br><br>
     <el-breadcrumb separator="/">
       <el-breadcrumb-item  :to="{ path: '/Home' }"><i class = "el-icon-caret-left"></i>Home Page</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/shopingCart' }">ShoppingCart</el-breadcrumb-item>
     </el-breadcrumb>
     <br><br><br>
     <h2 style="align-self: flex-start">Search Bar</h2>

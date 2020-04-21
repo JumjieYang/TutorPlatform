@@ -1,7 +1,12 @@
 <template>
   <div id = 'app'>
     <logo></logo>
-    <br><br><br>
+    <br><br>
+    <el-breadcrumb separator="|">
+      <el-breadcrumb-item  :to="{ path: '/Home' }"><i class = "el-icon-caret-left"></i>Home Page</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/Profile' }">Profile</el-breadcrumb-item>
+    </el-breadcrumb>
+    <br>
     <el-table :data="tableData" border style="width: 100%" @selection-change="selected">
       <el-table-column type="selection" width="50"> </el-table-column>
       <el-table-column label="Course Title" width="680">
@@ -11,7 +16,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="Price" width="150" prop="price"> </el-table-column>
+      <el-table-column label="Price" width="150" prop="price"></el-table-column>
       <el-table-column label="Quantity" width="200">
         <template scope="scope">
           <div>
