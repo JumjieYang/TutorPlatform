@@ -26,7 +26,7 @@ export default {
 <style>
     .chat{
         margin-right: 25px;
-        margin-bottom: 300px;
+        margin-top: 0%;
         width: 350px;
         box-shadow: 0 0px 27px 1.5px rgba(0,0,0,0.2);
     }

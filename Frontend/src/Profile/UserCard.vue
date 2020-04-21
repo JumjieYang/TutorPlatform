@@ -9,7 +9,7 @@
         <div class="block"><el-avatar :size="50" ></el-avatar></div>
       </div> 
       <div class="box-center">
-        <div class="user-name text-center">Tester</div>
+        <div class="user-name text-center">{{ username }}</div>
       </div>
     </div>
 
@@ -30,7 +30,11 @@
 
 <script>
 export default {
-  
+    data() {
+        return {
+            username: this.$store.state.userName
+        }
+    },
 }
 </script>
 

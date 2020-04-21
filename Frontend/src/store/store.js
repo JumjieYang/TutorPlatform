@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:8000/'
+//axios.defaults.baseURL = 'http://localhost:8000/'
 
 Vue.use(Vuex)
 
@@ -9,6 +9,8 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state:{
         token: localStorage.getItem('token') || null,
+        userId: localStorage.getItem('userId') || null,
+        userName: localStorage.getItem('userName') || null,
     },
     getters:{
         loggedIn(state){
@@ -19,6 +21,12 @@ export const store = new Vuex.Store({
         retrieveToken(state, token) {
             state.token = token;
         },
+        setUserId(state, userId){
+            state.userId = userId;
+        },
+        setUserName(state, userName){
+            state.userName = userName;
+        },
     },
     actions: {
       retrieveToken (context, credentials) {
@@ -28,11 +36,16 @@ export const store = new Vuex.Store({
                   password: credentials.password,
                 })
                 .then(response => {
-                //console.log(response)
-                const token = response.data.token
-                localStorage.setItem('token', token)
-                context.commit('retrieveToken', token)
-                resolve(response)
+                    console.log(response)
+                    const token = response.data.token
+                    localStorage.setItem('token', token)
+                    context.commit('retrieveToken', token)
+                    //console.log(response.data.user_id);
+                    localStorage.setItem('userName', response.data.username)
+                    context.commit('setUserName', response.data.username)
+                    localStorage.setItem('userId', response.data.user_id)
+                    context.commit('setUserId', response.data.user_id)
+                    resolve(response)
                 })
                 .catch(error => {
                     console.log(error)
