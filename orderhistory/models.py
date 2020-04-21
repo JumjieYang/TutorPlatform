@@ -13,4 +13,3 @@ class OrderHistory(models.Model):
     address = models.CharField(max_length=30)
     owner = models.ForeignKey(User,on_delete= CASCADE,to_field='id')
     cart = models.ForeignKey(ShoppingCart, on_delete=CASCADE, to_field='id')
-    isPayed = models.BooleanField(default=False)
