@@ -48,6 +48,7 @@ First, start the Redis server by typing the following command
 redis-server
 ```
 This command is to start the Redis Server that is needed for websocket real time chat functionality
+
 To run backend tests
 ```
 python3 manage.py test
