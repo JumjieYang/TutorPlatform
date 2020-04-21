@@ -88,6 +88,7 @@ export default {
             number : '',
             description: '',
             price:'',
+            subject:'',
             availability:'',
             activeNames: ['0']
         }

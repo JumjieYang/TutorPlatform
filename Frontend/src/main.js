@@ -16,6 +16,7 @@ Vue.use(Element)
 Vue.use(ChatInstaller)
 Vue.use(VueAxios, axios)
 
+axios.defaults.baseURL = 'http://localhost:8000/';
 Vue.config.productionTip = false
 Vue.config.devtools = true;
 
