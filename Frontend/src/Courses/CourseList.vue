@@ -2,9 +2,14 @@
   <el-container>
     <el-header>
       <logo></logo>
-      <h1>McGill Tutor Platform</h1>
+      <h1>Courses List</h1>
     </el-header>
-    <br><br><br><br><br><br><br>
+
+    <br><br><br><br>
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item  :to="{ path: '/Home' }"><i class = "el-icon-caret-left"></i>Home Page</el-breadcrumb-item>
+    </el-breadcrumb>
+    <br><br><br>
     <h2 style="align-self: flex-start">Search Bar</h2>
     <div @click="refresh" >
       <i class="el-icon-refresh">refresh courses list</i>
@@ -90,8 +95,14 @@
         displayList: []
       }
     },
+    created: function(){
+      this.loadCourse();
+    },
     methods: {
       // these are test data
+      loadCourse(){
+        this.displayList = this.courses;
+      },
       loadAll() {
         return [
           { "value": "Comp421", "tutor": "Lee" },

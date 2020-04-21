@@ -36,7 +36,7 @@
       </el-table-column>
     </el-table> <br>
     <el-button type="info" >{{"Total Price：" + moneyTotal}}</el-button>
-    <el-button type="primary" style="float: right" size="small" @click="submitBtn">Check Out<i class="el-icon-upload el-icon--right"></i></el-button>
+    <el-button type="primary" style="float: right" size="small" onclick="submitBtn">Check Out<i class="el-icon-upload el-icon--right"></i></el-button>
   </div>
 </template>
 <script>
