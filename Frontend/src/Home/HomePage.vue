@@ -4,7 +4,7 @@
       <logo></logo>
       <h1>McGill Tutor Platform</h1>
       <el-menu  router :default-active="$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-menu-item index="1">
+        <el-menu-item index="/aboutUs">
           <i class = 'el-icon-info'></i>
           About Us</el-menu-item>
         <el-submenu index="/aboutUs">

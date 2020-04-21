@@ -11,6 +11,7 @@ import logo from '@/Home/Logo'
 import ShoppingCart from '@/Courses/ShopingCart'
 import Chat from '@/Chat/test'
 import CourseDetail from "../Courses/CourseDetail";
+import aboutUs from "../Home/aboutUs";
 
 Vue.use(Router)
 
@@ -80,6 +81,15 @@ export default new Router({
         requiresAuth: true,
       }
     },
+    {
+      path: '/aboutUs',
+      name: 'aboutUs',
+      component: aboutUs,
+      meta:{
+        requireAuth: true,
+      }
+    },
+
     {
       path: '/logo',
       name: 'logo',
