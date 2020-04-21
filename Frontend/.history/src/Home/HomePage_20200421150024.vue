@@ -1,5 +1,6 @@
 <template>
   <el-container>
+    <el-container>
       <el-main>
         <h2>Come and join our <br> McGIll Tutor Community</h2>
         <tutorImage></tutorImage>
@@ -7,6 +8,7 @@
           <el-link href = '#/Courses'>Courses Preview</el-link>
         </div>
       </el-main>
+    </el-container>
   </el-container>
 </template>
 

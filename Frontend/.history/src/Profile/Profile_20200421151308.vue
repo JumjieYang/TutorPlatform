@@ -55,9 +55,6 @@ export default {
 
 <style>
   .app-container{
-    margin-top:15px;
-    margin-left: 15px;
-    margin-right: 15px;
-    
+    margin-top:515px
   }
 </style>

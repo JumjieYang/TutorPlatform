@@ -2,16 +2,14 @@
   <div id="app">
     <nav-bar v-if="this.$store.state.token!=null"></nav-bar>
     <router-view></router-view>
-    <modal v-show="isOpen"> 
-    <chat ></chat>
-    </modal>
-    <div class="sc-launcher"  @click.prevent="isOpen = !isOpen" :style="{backgroundColor:'#4e8cff'}">
+    <chat v-show="isOpen"></chat>
+    <!-- <div class="sc-launcher"  @click.prevent="isOpen = !isOpen" :style="{backgroundColor:'#4e8cff'}">
       <!-- <div v-if="newMessagesCount > 0 && !isOpen" class="sc-new-messsages-count">
         {{newMessagesCount}}
       </div> -->
       <img v-if="isOpen" class="sc-closed-icon" :src="icons.close.img"  :alt="icons.close.name" />
       <img v-else class="sc-open-icon" :src="icons.open.img"  :alt="icons.open.name" />
-    </div>
+    </div> -->
   </div>
 </template>
 

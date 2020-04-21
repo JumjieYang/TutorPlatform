@@ -2,9 +2,7 @@
   <div id="app">
     <nav-bar v-if="this.$store.state.token!=null"></nav-bar>
     <router-view></router-view>
-    <modal v-show="isOpen"> 
-    <chat ></chat>
-    </modal>
+    <chat v-show=""></chat>
     <div class="sc-launcher"  @click.prevent="isOpen = !isOpen" :style="{backgroundColor:'#4e8cff'}">
       <!-- <div v-if="newMessagesCount > 0 && !isOpen" class="sc-new-messsages-count">
         {{newMessagesCount}}
@@ -16,8 +14,6 @@
 </template>
 
 <script>
-import CloseIcon from './Chat/close-icon.png'
-import OpenIcon from './Chat/logo-no-bg.svg'
 import Chat from './Chat/Chat'
 import NavBar from './components/NevBar'
 export default {

@@ -53,11 +53,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus">
   .app-container{
-    margin-top:15px;
-    margin-left: 15px;
-    margin-right: 15px;
-    
+    margin-top:50px;
   }
 </style>
