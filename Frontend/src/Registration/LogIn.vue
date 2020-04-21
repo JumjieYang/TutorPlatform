@@ -1,3 +1,4 @@
+
 <template>
   <el-container>
     <el-header><logo></logo></el-header>
@@ -16,33 +17,40 @@
           <el-form-item>
             <el-input
               placeholder="Username"
-              v-model="username" 
+              v-model="username"
               type="text"
             />
           </el-form-item>
 
           <el-tooltip placement="right" manual>
-            <el-form-item >
+            <el-form-item v-if="visible" label="password">
+              <el-input type="password" v-model="password" placeholder="Password">
+                <i slot="suffix" title="show pass" @click="showPass('show')" style="cursor:pointer;"
+                   class="el-icon-view"></i>
+              </el-input>
+            </el-form-item>
+            <el-form-item v-else label = "password">
               <el-input
                 placeholder="Password"
-                type="password"
-                v-model="password"
-              />
+                v-model="password">
+                <i slot="suffix" title="hide pass" @click="showPass('hide')" style="cursor:pointer;"
+                   class="el-icon-view"></i>
+              </el-input>
             </el-form-item>
           </el-tooltip>
         </el-form>
-        <el-button type="primary" style="width:100%;margin-bottom:30px;"  @click="submit">Login</el-button>
-
       </div>
     </el-main>
+    <el-container style="align-self: center">
+      <el-button type="primary" size="large" @click="submit">login</el-button>
+    </el-container>
   </el-container>
 
 </template>
 
 <script>
-  import Logo from '../Home/Logo'   
-  import router from './../router/index' 
-
+  import Logo from '../Home/Logo'
+  import router from './../router/index'
   export default {
     name: 'Homepage',
     components: {
@@ -54,23 +62,32 @@
         password: '',
         activeIndex: '1',
         activeIndex2: '1',
+        visible: true
       };
     },
     methods:{
       submit() {
-            const vm = this;
-            //console.log(666);
-            this.$store.dispatch('retrieveToken',  {
-                username: this.username,
-                password: this.password
-            })
-            .then(function (response) {
-                vm.$router.push('/Home')
-            })
-            .catch(function (error) {
-                vm.$message.error('Please try again.');
-            });
-        }
+        const vm = this;
+        //console.log(666);
+        this.$store.dispatch('retrieveToken',  {
+          username: this.username,
+          password: this.password
+        })
+          .then(function (response) {
+            vm.$router.push('/Home')
+          })
+          .catch(function (error) {
+            vm.$message.error('Please try again.');
+          });
+      },
+      validateEmail(email){
+        let re = /\S+@\S+\.\S+/;
+        return re.test(email);
+      },
+      showPass(value) {
+        this.visible = !(value === 'show');
+      }
     }
   }
+
 </script>

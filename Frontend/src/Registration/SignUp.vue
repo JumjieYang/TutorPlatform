@@ -7,15 +7,15 @@
           <el-breadcrumb-item :to="{ path: '/Home' }">Home Page</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/Login' }">Login</el-breadcrumb-item>
         </el-breadcrumb>
-        <el-form>
+        <el-form @submit.prevent.native="validateEmail()">
           <div class="title-container">
             <h3 class="title">Tutor Platform</h3>
           </div>
 
-          <el-form-item>
+          <el-form-item id = 'username'>
             <el-input
               placeholder="Username"
-              v-model="username" 
+              v-model="username"
               type="text"
             />
           </el-form-item>
@@ -30,10 +30,11 @@
             </el-form-item>
           </el-tooltip>
         </el-form>
-        <el-button type="primary" style="width:100%;margin-bottom:30px;"  @click="submit" >Sign Up</el-button>
-
       </div>
     </el-main>
+    <el-container style="align-self: center">
+      <el-button type="primary" style="width:100%;margin-bottom:30px;"  @click="submit" >Sign Up</el-button>
+    </el-container>
   </el-container>
 
 </template>
@@ -74,7 +75,15 @@
                 vm.$message.error('Error. Maybe you entered a existing username.');
                 console.log(error);
             });
+        },
+      validateEmail(){
+        let email = document.getElementById('username').value;
+        let re = /\S+@\S+\.\S+/;
+        if(!re.test(email)){
+          alert("You entered incorrect format for email, try again!");
         }
+        return re.test(email);
+      }
     },
 
   }
