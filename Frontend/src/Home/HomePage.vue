@@ -7,7 +7,7 @@
         <el-menu-item index="1">
           <i class = 'el-icon-info'></i>
           About Us</el-menu-item>
-        <el-submenu index="2">
+        <el-submenu index="/aboutUs">
           <template slot="title">
             <i class = 'el-icon-menu'></i>
             Sign Up/Login</template>
@@ -18,14 +18,16 @@
             <i class = 'el-icon-key'></i>
             Login</el-menu-item>
         </el-submenu>
-        <el-menu-item index="3" disabled>Logout</el-menu-item>
+        <el-menu-item index="/Profile" >
+          <i class = 'el-icon-s-custom'></i>
+          Personal Profile</el-menu-item>
       </el-menu>
     </el-header>
     <br><br><br><br><br><br><br><br>
     <el-container>
       <el-main>
         <h2>Come and join our <br> McGIll Tutor Community</h2>
-        <tutor-image></tutor-image>
+        <tutorImage></tutorImage>
         <div class = 'coursesList'>
           <el-link href = '#/Courses'>Courses Preview</el-link>
         </div>
