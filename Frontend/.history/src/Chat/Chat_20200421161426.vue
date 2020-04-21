@@ -33,7 +33,7 @@ export default {
         bottom: 100px;
         box-sizing: border-box;
         box-shadow: 0px 7px 40px 2px rgba(148, 149, 150, 0.1);
-        /* background: white; */
+        background: white;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -42,6 +42,5 @@ export default {
         animation: fadeIn;
         animation-duration: 0.3s;
         animation-timing-function: ease-in-out;
-        opacity: 1;
     }
 </style>
