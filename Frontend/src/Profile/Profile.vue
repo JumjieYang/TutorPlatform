@@ -18,7 +18,7 @@
                 <account-setting/>
               </el-tab-pane> 
 
-              <el-tab-pane label="Tutor Setting" name="tutorsetting">
+              <el-tab-pane v-if="this.$store.state.isTutor!=false" label="Tutor Setting" name="tutorsetting">
                 <tutor-setting/>
               </el-tab-pane> 
             </el-tabs>

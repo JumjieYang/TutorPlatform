@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state:{
         chatList: [''],
+        isTutor: false,
         token: localStorage.getItem('token') || null,
         userId: localStorage.getItem('userId') || null,
         userName: localStorage.getItem('userName') || null,
@@ -32,6 +33,10 @@ export const store = new Vuex.Store({
         setUserName(state, userName){
             state.userName = userName;
         },
+        setIsTutor(state, isTutor){
+            state.isTutor = isTutor
+            console.log("store " + state.isTutor)
+        }
     },
     actions: {
         signOut(context) {
@@ -43,22 +48,6 @@ export const store = new Vuex.Store({
                 console.log("signed out")
                 context.commit('destroyToken')
 
-                // return new Promise((resolve, reject) => {
-                //     axios.get("/api-auth/logout/",{
-                //         headers: { 'Authorization' : 'Token '+ context.state.token}
-                //     })
-                //     .then((response) => {
-                //         localStorage.removeItem('token')
-                //         context.commit('destroyToken')
-                //         resolve(response)
-                //     })
-                //     .catch((error) => {
-                //         localStorage.removeItem('token')
-                //         console.log("=====================action")
-                //         context.commit('destroyToken')
-                //         reject(error)
-                //     })
-                // })
             }
         },  
         retrieveToken (context, credentials) {
