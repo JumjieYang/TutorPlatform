@@ -68,7 +68,6 @@
     methods:{
       submit() {
         const vm = this;
-        //console.log(666);
         this.$store.dispatch('retrieveToken',  {
           username: this.username,
           password: this.password
@@ -86,7 +85,7 @@
       },
       showPass(value) {
         this.visible = !(value === 'show');
-      }
+      },
     }
   }
 

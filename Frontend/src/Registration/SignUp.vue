@@ -7,7 +7,7 @@
           <el-breadcrumb-item :to="{ path: '/Home' }">Home Page</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: '/Login' }">Login</el-breadcrumb-item>
         </el-breadcrumb>
-        <el-form @submit.prevent.native="validateEmail()">
+        <el-form>
           <div class="title-container">
             <h3 class="title">Tutor Platform</h3>
           </div>
@@ -57,6 +57,12 @@
     },
     methods:{
         submit() {
+          let email = document.getElementById('username').value;
+          let re = /\S+@\S+\.\S+/;
+          if(!re.test(email)){
+            alert("You entered incorrect format for email, try again!");
+          }
+          return re.test(email);
             console.log(666);
             const vm = this;
             this.axios.post("http://localhost:8000/api-auth/register/", {
@@ -76,14 +82,6 @@
                 console.log(error);
             });
         },
-      validateEmail(){
-        let email = document.getElementById('username').value;
-        let re = /\S+@\S+\.\S+/;
-        if(!re.test(email)){
-          alert("You entered incorrect format for email, try again!");
-        }
-        return re.test(email);
-      }
     },
 
   }

@@ -41,11 +41,21 @@
     methods: {
       // these are test data
       loadAll() {
-        return [
-          { "value": "Comp421", "tutor": "Lee" },
-          { "value": "Comp307", "tutor": "Cornell" },
-          { "value": "Math323", "tutor": "Kobe" }
-        ];
+        this.axios.get("/api-course/courses/",{
+          headers: { 'Authorization' : 'Token '+ this.$store.state.token}
+        })
+          .then((response) => {
+            let courses = response.data
+            for (let course of courses) {
+              let courseInfo = {'value': course.subject + '' + course.number,
+                'tutor': course.tutor, 'rating': course.rating, 'url': '/'}
+              this.displayList.push(courseInfo)
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$message.error('Please try again.');
+          })
       },
       querySearchAsync(queryString, cb) {
         let courses = this.courses;

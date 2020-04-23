@@ -3,30 +3,33 @@
     <el-header>
       <logo></logo>
       <h1>Courses List</h1>
+
     </el-header>
 
-    <br><br><br><br>
     <el-breadcrumb separator="/">
       <el-breadcrumb-item  :to="{ path: '/Home' }"><i class = "el-icon-caret-left"></i>Home Page</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/shopingCart' }">ShoppingCart</el-breadcrumb-item>
     </el-breadcrumb>
-    <br><br><br>
+
     <h2 style="align-self: flex-start">Search Bar</h2>
+    <br><br>
     <div @click="refresh" >
-      <i class="el-icon-refresh">refresh courses list</i>
+      <i class="el-icon-refresh"></i>
     </div>
     <el-autocomplete
       v-model="state"
       :fetch-suggestions="querySearchAsync"
       placeholder="type the course information"
-      @select="handleSelect"
+      @select="loadCourse"
       @click = "handleClick"
-    ></el-autocomplete>
+    >
+    </el-autocomplete>
+    <br>
     <el-table
       :data="displayList"
-      height="350"
       border
-      style="width: 100%">
+      style="width: 100%"
+      empty-text = 'Course Records not found!'>
       <div class = 'courseNum'>
         <el-table-column
           prop="value"
@@ -105,8 +108,8 @@
             headers: { 'Authorization' : 'Token '+ this.$store.state.token}
         })
         .then((response) => {
-            var courses = response.data
-            for (var course of courses) {
+            this.courses = response.data
+            for (var course of this.courses) {
                 var courseInfo = {'value': course.subject + '' + course.number,
                                 'tutor': course.tutor, 'rating': course.rating, 'url': '/'}
                 this.displayList.push(courseInfo)
@@ -117,13 +120,6 @@
             this.$message.error('Please try again.');
         })
         //this.displayList = this.courses;
-      },
-      loadAll() {
-        return [
-          { "value": "Comp421", "tutor": "Lee" },
-          { "value": "Comp307", "tutor": "Cornell" },
-          { "value": "Math323", "tutor": "Kobe" }
-        ];
       },
       querySearchAsync(queryString, cb) {
         let courses = this.courses;

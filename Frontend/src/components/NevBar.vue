@@ -7,17 +7,17 @@
             <el-submenu index="2">
                 <template slot="title">Courses</template>
                 <el-menu-item index="/Courses">View Courses</el-menu-item>
-                <el-menu-item index="/Search">Search</el-menu-item>
-                <el-menu-item index="/shopingCart">shopingCart</el-menu-item>
+                <el-menu-item index="/shopingCart">ShopingCart</el-menu-item>
             </el-submenu>
             <el-menu-item index="/Profile">Profile</el-menu-item>
+            <el-menu-item @click="logOut"  index="/Login">Log out</el-menu-item>
         </el-menu>
     </el-col>
     <el-col :span="2">
         <img src='./../assets/logo.jpg' alt="" class="navbar__logo" @click="homePage">
     </el-col>
     </el-container>
-    
+
 
 </template>
 

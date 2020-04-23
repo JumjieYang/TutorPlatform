@@ -9,7 +9,7 @@ import Search from '@/Courses/Search'
 import HomePage from '@/Home/HomePage'
 import logo from '@/Home/Logo'
 import ShoppingCart from '@/Courses/ShopingCart'
-import Chat from '@/Chat/test'
+import Chat from '@/Chat/Chat'
 import CourseDetail from "../Courses/CourseDetail";
 import aboutUs from "../Home/aboutUs";
 
@@ -104,6 +104,11 @@ export default new Router({
       path: '/CourseDetail',
       name: 'CourseDetail',
       component: CourseDetail
+    },
+    {
+      path :'/Chat',
+      name: 'Chat',
+      component: Chat
     }
 
   ]

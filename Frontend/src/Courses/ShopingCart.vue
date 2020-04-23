@@ -9,7 +9,7 @@
     <br>
     <el-table :data="tableData" border style="width: 100%" @selection-change="selected">
       <el-table-column type="selection" width="50"> </el-table-column>
-      <el-table-column label="Course Title" width="680">
+      <el-table-column label="Course Title" width="680" align="align-self: center">
         <template scope="scope">
           <div style="margin-left: 50px">
             <span style="font-size: 18px;padding-left: 200px;">{{scope.row.title}}</span>
