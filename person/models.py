@@ -14,4 +14,6 @@ class Profile(models.Model):
     lastName = models.CharField(max_length=10)
     age = models.IntegerField()
     phoneNumber = models.CharField(max_length=10)
+    isTutor = models.BooleanField(default=False)
     image = models.ImageField(upload_to=custom_upload_path, null=True)
+

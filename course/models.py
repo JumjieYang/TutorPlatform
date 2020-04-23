@@ -13,7 +13,7 @@ class Course(models.Model):
     term = models.CharField(max_length=6)
     rating = models.FloatField(default=0)
     time_chosed = models.IntegerField(default=0)
-    description = models.CharField(max_length=100)
+    description = models.CharField(max_length=1000)
     isAvailable = models.BooleanField(default=False)
     price = models.FloatField(default=0)
     tutor = models.ForeignKey(User, on_delete=CASCADE, null=True)
