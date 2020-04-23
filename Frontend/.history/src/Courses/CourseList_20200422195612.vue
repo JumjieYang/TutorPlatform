@@ -100,16 +100,17 @@
       this.loadCourse();
     },
     methods: {
+      // these are test data
       loadCourse(){
         this.axios.get("/api-course/courses/",{
             headers: { 'Authorization' : 'Token '+ this.$store.state.token}
         })
         .then((response) => {
-            var courses = response.data
-            for (var course of courses) {
-                var courseInfo = {'value': course.subject + '' + course.number,
-                                'tutor': course.tutor, 'rating': course.rating, 'url': '/'}
-                this.displayList.push(courseInfo)
+            console.log(response.data)
+            for (course in response.data) {
+                console.log(course)
+                // displayList.push({'course': course.subject + '' + course.number,
+                //                 'tutor': course.tutor, 'rating': course.rating, url: '/'})
             }
         })
         .catch((error) => {

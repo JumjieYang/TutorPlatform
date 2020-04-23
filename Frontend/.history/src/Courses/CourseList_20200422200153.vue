@@ -100,6 +100,7 @@
       this.loadCourse();
     },
     methods: {
+      // these are test data
       loadCourse(){
         this.axios.get("/api-course/courses/",{
             headers: { 'Authorization' : 'Token '+ this.$store.state.token}
@@ -107,8 +108,9 @@
         .then((response) => {
             var courses = response.data
             for (var course of courses) {
-                var courseInfo = {'value': course.subject + '' + course.number,
-                                'tutor': course.tutor, 'rating': course.rating, 'url': '/'}
+                var courseInfo = {'course': course.subject + '' + course.number,
+                                'tutor': course.tutor, 'rating': course.rating, url: '/'}
+                console.log(courseInfo)
                 this.displayList.push(courseInfo)
             }
         })

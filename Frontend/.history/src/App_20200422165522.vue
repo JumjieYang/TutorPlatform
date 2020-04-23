@@ -59,9 +59,11 @@ export default {
    -moz-osx-font-smoothing: grayscale;
    text-align: center;
    color: #2c3e50;
-
  }
  
+ ::-webkit-scrollbar {display:none;}
+
+
  .sc-launcher {
    width: 60px;
    height: 60px;
