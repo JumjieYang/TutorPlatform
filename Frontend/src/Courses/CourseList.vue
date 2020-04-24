@@ -25,7 +25,8 @@
     <el-table
       :data="displayList"
       border
-      style="width: 100%; height='100%'">
+      style="width: 100% ;height: 100% "
+      empty-text="No course found">
       <div class = 'courseNum'>
         <el-table-column
           prop="value"
@@ -52,7 +53,7 @@
         prop="photo"
         label="photo"
         width="250">
-        
+
       </el-table-column>
 
         <el-table-column

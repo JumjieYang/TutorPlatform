@@ -8,26 +8,26 @@
                         <el-form-item>
                         <el-input
                             placeholder="First Name"
-                            v-model="firstName" 
+                            v-model="firstName"
                             type="text"
                         />
                         </el-form-item>
                         <el-form-item>
                         <el-input
                             placeholder="Last Name"
-                            v-model="lastName" 
+                            v-model="lastName"
                             type="text"
                         />
                         </el-form-item><el-form-item>
                         <el-input
                             placeholder="Phone Number"
-                            v-model="phoneNumber" 
+                            v-model="phoneNumber"
                             type="text"
                         />
                         </el-form-item><el-form-item>
                         <el-input
                             placeholder="Age"
-                            v-model="age" 
+                            v-model="age"
                             type="text"
                         />
                         </el-form-item>
@@ -95,7 +95,7 @@
                 </el-col>
             </el-collapse-item>
 
-            
+
         </el-collapse>
     </div>
 </template>
@@ -159,10 +159,10 @@ export default {
             const isLt2M = file.size / 1024 / 1024 < 2;
 
             if (!isJPG) {
-            this.$message.error('上传头像图片只能是 JPG 格式!');
+            this.$message.error('Pic can only be jpg format!');
             }
             if (!isLt2M) {
-            this.$message.error('上传头像图片大小不能超过 2MB!');
+            this.$message.error('Pic size cannot be larger than 2MB!');
             }
             return isJPG && isLt2M;
         },
@@ -247,7 +247,7 @@ export default {
         }
     },
     mounted(){
-        
+
     },
     watch: {
         becomeTutor: function () {
@@ -281,7 +281,7 @@ export default {
             })
         }
     },
-    
+
 }
 </script>
 
