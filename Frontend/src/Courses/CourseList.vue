@@ -1,35 +1,31 @@
 <template>
   <el-container>
     <el-header>
-      <logo></logo>
+      <!-- <logo></logo> -->
       <h1>Courses List</h1>
-
     </el-header>
 
+    <br><br><br><br>
     <el-breadcrumb separator="/">
       <el-breadcrumb-item  :to="{ path: '/Home' }"><i class = "el-icon-caret-left"></i>Home Page</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/shopingCart' }">ShoppingCart</el-breadcrumb-item>
     </el-breadcrumb>
-
+    <br><br><br>
     <h2 style="align-self: flex-start">Search Bar</h2>
-    <br><br>
     <div @click="refresh" >
-      <i class="el-icon-refresh"></i>
+      <i class="el-icon-refresh">refresh courses list</i>
     </div>
     <el-autocomplete
       v-model="state"
       :fetch-suggestions="querySearchAsync"
       placeholder="type the course information"
-      @select="loadCourse"
+      @select="handleSelect"
       @click = "handleClick"
-    >
-    </el-autocomplete>
-    <br>
+    ></el-autocomplete>
     <el-table
       :data="displayList"
       border
-      style="width: 100%"
-      empty-text = 'Course Records not found!'>
+      style="width: 100%; height='100%'">
       <div class = 'courseNum'>
         <el-table-column
           prop="value"
@@ -51,6 +47,14 @@
             <el-rate v-model="scope.row.rating" :allow-half="true"  show-score disabled text-color="#ff9900"></el-rate>
           </template>
         </el-table-column>
+
+        <el-table-column
+        prop="photo"
+        label="photo"
+        width="250">
+        
+      </el-table-column>
+
         <el-table-column
         prop = 'detail'
         label = 'Course Detail'>
@@ -73,27 +77,7 @@
     },
     data() {
       return {
-        courses: [{
-          value: 'Comp421',
-          tutor: 'Stephen',
-          rating: 3,
-          url: '/'
-        }, {
-          value: 'Comp307',
-          tutor: 'Kevin',
-          rating: 4,
-          url: '/'
-        }, {
-          value: 'Math223',
-          tutor: 'Donald',
-          rating: 5,
-          url: '/'
-        }, {
-          value: 'Ecse321',
-          tutor: 'Lee',
-          rating: 4.3,
-          url: '../search'
-        }],
+        courses: [],
         state: '',
         timeout:  null,
         displayList: []
@@ -108,10 +92,10 @@
             headers: { 'Authorization' : 'Token '+ this.$store.state.token}
         })
         .then((response) => {
-            this.courses = response.data
-            for (var course of this.courses) {
+            var courses = response.data
+            for (var course of courses) {
                 var courseInfo = {'value': course.subject + '' + course.number,
-                                'tutor': course.tutor, 'rating': course.rating, 'url': '/'}
+                                'tutor': course.tutor, 'rating': course.rating, 'photo':course.description, 'url': '/'}
                 this.displayList.push(courseInfo)
             }
         })
@@ -120,6 +104,13 @@
             this.$message.error('Please try again.');
         })
         //this.displayList = this.courses;
+      },
+      loadAll() {
+        return [
+          { "value": "Comp421", "tutor": "Lee" },
+          { "value": "Comp307", "tutor": "Cornell" },
+          { "value": "Math323", "tutor": "Kobe" }
+        ];
       },
       querySearchAsync(queryString, cb) {
         let courses = this.courses;

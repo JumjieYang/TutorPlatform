@@ -125,7 +125,7 @@ export default {
    justify-content: center;
    flex-direction: column;
    border-radius: 50%;
- 	width: 22px;
+ 	 width: 22px;
    height: 22px;
    background: #ff4646;
    color: white;

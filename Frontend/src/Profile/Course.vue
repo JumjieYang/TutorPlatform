@@ -48,7 +48,7 @@
                     />
                 </el-form-item>
             </el-form>
-            <el-button class="reset-password" type="primary" style="width:50%; margin-bottom:10px;"  @click="submitCourse">submit</el-button>
+            <el-button class="reset-password" type="primary" style="width:50%; margin-bottom:10px;"  @click="submit">submit</el-button>
         </el-card>
     </div>
 </template>
@@ -65,12 +65,15 @@ export default {
             price:'',
             subject:'',
             isAvailable:true,
+            time_chosed:'',
+            image: ''
         }
     },
     methods: {
         colseCollapseItem(){
         },
         submitCourse(){
+            //this.getCoursePhoto()
             const userId = this.$store.state.userId
             const instance = this.axios.create({
             headers: {
@@ -78,17 +81,18 @@ export default {
                 'Content-Type': 'application/json'
             },
             });
-            console.log(this.$store.state.userName);
+            //console.log(this.$store.state.userName);
             instance({
                 url: '/api-course/course/',
                 data: {
-                    subject: this.subject,
-                    number: this.number,
-                    term: this.term,
-                    description: this.description,
-                    isAvailable: this.isAvailable,
-                    price: this.price,
-                    tutor: userId
+                    'subject': this.subject,
+                    'number': this.number,
+                    'term': this.term,
+                    'description': this.description,
+                    'isAvailable': this.isAvailable,
+                    'price': this.price,
+                    'image': this.image,
+                    'tutor': userId,
                 },
                 method: "post",
             })
@@ -105,6 +109,18 @@ export default {
                 this.$message.error('Please try again.');
             })
         },
+        submit(){
+            this.axios.get("https://api.unsplash.com/photos/random?query=canada&client_id=NgLD4aZRV1pErx3APaS_K9HnLj9QzIEebw3gmF6a2vc")
+            .then((response) => {
+                this.image = response.data.urls.regular
+                //console.log(this.image)
+                this.submitCourse()
+            })
+            .catch((error) => {
+                console.log(error);
+                this.$message.error('Please try again.');
+            })
+        }
     }
 }
 </script>
