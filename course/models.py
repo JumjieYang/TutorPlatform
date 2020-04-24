@@ -19,8 +19,7 @@ class Course(models.Model):
     description = models.CharField(max_length=1000)
     isAvailable = models.BooleanField(default=False)
     price = models.FloatField(default=0)
-    image = models.CharField(max_length=10000)
-        #ImageField(upload_to=custom_upload_path, null=True)
+    image = models.CharField(max_length=10000,blank=True, null=True)
     tutor = models.ForeignKey(User, on_delete=CASCADE, null=True)
 
 
