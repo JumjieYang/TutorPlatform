@@ -4,14 +4,14 @@
     <el-header><logo></logo></el-header>
     <el-main>
       <div class="login-container">
+        <h4>McGill Tutor Platform</h4>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/Home'}">Home Page</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/SignUp' }">Sign Up</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/SignUp' }"><i class = 'el-icon-thumb'></i>Sign Up</el-breadcrumb-item>
         </el-breadcrumb>
 
         <el-form>
           <div class="title-container">
-            <h3 class="title">Tutor Platform</h3>
+            <h3 class="title">Login page</h3>
           </div>
 
           <el-form-item>
@@ -23,13 +23,13 @@
           </el-form-item>
 
           <el-tooltip placement="right" manual>
-            <el-form-item v-if="visible" label="password">
+            <el-form-item v-if="visible">
               <el-input type="password" v-model="password" placeholder="Password">
                 <i slot="suffix" title="show pass" @click="showPass('show')" style="cursor:pointer;"
                    class="el-icon-view"></i>
               </el-input>
             </el-form-item>
-            <el-form-item v-else label = "password">
+            <el-form-item v-else>
               <el-input
                 placeholder="Password"
                 v-model="password">

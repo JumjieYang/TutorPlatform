@@ -3,13 +3,13 @@
     <el-header><logo></logo></el-header>
     <el-main>
       <div class="login-container">
+        <h4>McGill Tutor Platform</h4>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/Home' }">Home Page</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/Login' }">Login</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/Login' }"><i class = 'el-icon-thumb'></i>Login</el-breadcrumb-item>
         </el-breadcrumb>
         <el-form>
           <div class="title-container">
-            <h3 class="title">Tutor Platform</h3>
+            <h3 class="title">SignUp Page</h3>
           </div>
 
           <el-form-item id = 'username'>
@@ -57,12 +57,6 @@
     },
     methods:{
         submit() {
-          let email = document.getElementById('username').value;
-          let re = /\S+@\S+\.\S+/;
-          if(!re.test(email)){
-            alert("You entered incorrect format for email, try again!");
-          }
-          return re.test(email);
             console.log(666);
             const vm = this;
             this.axios.post("http://localhost:8000/api-auth/register/", {
