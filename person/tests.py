@@ -33,10 +33,6 @@ class Test_person(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response = response.json()
         self.assertEqual(response['username'], 'testUser')
-        self.client.credentials(HTTP_AUTHORIZATION='')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-        response = response.json()
 
     def test_get_user_no_auth(self):
         url = reverse('user_detail', args=[1])
