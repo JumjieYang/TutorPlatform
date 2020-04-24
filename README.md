@@ -5,7 +5,7 @@ Course Project for COMP307 -- Principles of Web Development
 | Names | Student ID  |
 |:----------------:|:---:|
 | Hengxian Jiang   | 260830557 |
-| Yizhong Ding    |   |  
+| Yizhong Ding    | 260829197 |  
 | Junjie Yang       | 260829732  | 
 
 ## Description

@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <logo></logo>
+      <!-- <logo></logo> -->
       <h1>Courses List</h1>
     </el-header>
 
@@ -24,9 +24,8 @@
     ></el-autocomplete>
     <el-table
       :data="displayList"
-      height="350"
       border
-      style="width: 100%">
+      style="width: 100%; height='100%'">
       <div class = 'courseNum'>
         <el-table-column
           prop="value"
@@ -48,6 +47,14 @@
             <el-rate v-model="scope.row.rating" :allow-half="true"  show-score disabled text-color="#ff9900"></el-rate>
           </template>
         </el-table-column>
+
+        <el-table-column
+        prop="photo"
+        label="photo"
+        width="250">
+        
+      </el-table-column>
+
         <el-table-column
         prop = 'detail'
         label = 'Course Detail'>
@@ -70,27 +77,7 @@
     },
     data() {
       return {
-        courses: [{
-          value: 'Comp421',
-          tutor: 'Stephen',
-          rating: 3,
-          url: '/'
-        }, {
-          value: 'Comp307',
-          tutor: 'Kevin',
-          rating: 4,
-          url: '/'
-        }, {
-          value: 'Math223',
-          tutor: 'Donald',
-          rating: 5,
-          url: '/'
-        }, {
-          value: 'Ecse321',
-          tutor: 'Lee',
-          rating: 4.3,
-          url: '../search'
-        }],
+        courses: [],
         state: '',
         timeout:  null,
         displayList: []
@@ -108,7 +95,7 @@
             var courses = response.data
             for (var course of courses) {
                 var courseInfo = {'value': course.subject + '' + course.number,
-                                'tutor': course.tutor, 'rating': course.rating, 'url': '/'}
+                                'tutor': course.tutor, 'rating': course.rating, 'photo':course.description, 'url': '/'}
                 this.displayList.push(courseInfo)
             }
         })

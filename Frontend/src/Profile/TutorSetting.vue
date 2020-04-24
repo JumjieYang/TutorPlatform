@@ -39,8 +39,8 @@
                             </el-form-item>
                         </el-form>
                         <div slot="footer" class="dialog-footer">
-                            <el-button size="mini" @click="dialogVisible = false">取 消</el-button>
-                            <el-button size="mini" type="primary" @click="submitEdit">确 定</el-button>
+                            <el-button size="mini" @click="deleteCourse">Delete this course</el-button>
+                            <el-button size="mini" type="primary" @click="submitEdit">save change</el-button>
                         </div>
                     </el-dialog>
 
@@ -50,7 +50,16 @@
                             <span>{{course.subject}} {{course.number}}</span>
                             <el-button @click="editCourse(course)" style="float: right; padding: 3px 0" type="text">Edit</el-button>
                         </div>
-                        <p class="text item">
+                        <el-col :span="12">
+                            <el-image :src="course.image" style="width: 300px; height: 200px; margin-bottom: 10px">
+                            <div slot="placeholder" class="image-slot">
+                                Loading<span class="dot">...</span>
+                            </div>
+                            </el-image>
+                        </el-col>
+
+                        <el-col :span="12">
+                            <p class="text item">
                             {{'Term: ' + course.term}}
                             <br>
                             {{'Price: ' + course.price}}
@@ -66,7 +75,9 @@
                                 text-color="#ff9900"
                                 score-template="{value}">
                             </el-rate>                            
-                        </p>
+                            </p>
+                        </el-col>
+                        
                         </el-card>
                     </el-timeline-item>
                 </el-timeline>
@@ -98,7 +109,6 @@ export default {
         editCourse(course){
             //console.log(course.number)
             this.courseId = course.id,
-            console.log("course ID "+this.courseId)
             this.number = course.number,
             this.term = course.term,
             this.description = course.description,
@@ -107,8 +117,35 @@ export default {
             this.isAvailable = course.isAvailable,
             this.dialogVisible = !this.dialogVisible
         },
-        submitEdit(){
+        deleteCourse(){
             this.dialogVisible = false;
+            const userId = this.$store.state.userId
+            const instance = this.axios.create({
+            headers: {
+                Authorization: 'Token '+ this.$store.state.token,
+                'Content-Type': 'application/json'
+            },
+            });
+            //console.log(this.$store.state.userName);
+            instance({
+                url: '/api-course/courses/'+this.courseId,
+                method: "DELETE",
+            })
+            .then((response) => {
+                this.$message({
+                    message: 'Deleted sussessfully!',
+                    type: 'success'
+                });
+                this.updateCourse()
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+                this.$message.error('Please try again.');
+            })
+        },
+        submitEdit(){
+            this.dialogVisible = false
             const userId = this.$store.state.userId
             const instance = this.axios.create({
                 headers: {
@@ -127,20 +164,21 @@ export default {
                     price: this.price,
                     tutor: userId
                 },
-                method: "put",
+                method: "PATCH",
             })
             .then((response) => {
-                console.log(response.data);
+                //console.log(response.data);
                 this.$message({
                     message: 'Edited sussessfully!',
                     type: 'success'
                 });
+                this.updateCourse()
             })
             .catch((error) => {
                 console.log(error);
                 this.$message.error('Please try again.');
             })
-            this.updateCourse()
+            
         },
         update(activeNames){
             this.activeNames = activeNames
@@ -153,14 +191,14 @@ export default {
                 'Content-Type': 'application/json'
             },
             });
-            console.log(this.$store.state.userName);
+            //console.log(this.$store.state.userName);
             instance({
                 url: '/api-course/courses/',
                 method: "get",
             })
             .then((response) => {
                 this.courses = response.data
-                console.log(response.data)
+                //console.log(response.data)
             })
             .catch((error) => {
                 console.log(error);
@@ -170,6 +208,11 @@ export default {
     },
     mounted(){
         this.updateCourse()
+    },
+    watch:{
+        activeNames: function () {
+            this.updateCourse()
+        }
     },
     components:{
         Course

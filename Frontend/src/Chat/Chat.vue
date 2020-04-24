@@ -6,14 +6,15 @@
 import $ from 'jquery';
 export default {
     mounted: function(){
+        var userId = this.$store.state.userId;
         $("#chat").kendoChat();
         var chat = $("#chat").data("kendoChat");
         chat.renderMessage({
             type: "text",
-            text: "Play visit 'http://127.0.0.1:8000/chat/1/' to test chat function. "
+            text: "Welcome to TP"
         }, {
             id: kendo.guid(),
-            name: "Tester",
+            name: "Big brother",
             iconUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkGsD8I5_HnpduQhd3Spc2fqboGL5wIsnkaZSFdYmSZLcVzrlK&usqp=CAU"
         });
         
@@ -21,16 +22,30 @@ export default {
 
         chat.bind("sendMessage", chat_sendMessage);
         function chat_sendMessage(e) {
-            const message = {"message": e.text};
+            const message = {
+                "command": 'new_messgae',
+                'message': {
+                    //'id': str(message.id),
+                    'author': userId,
+                    'content': e.text,
+                }
+            };
             websock.send(JSON.stringify(message))
         }
         
         websock.onmessage = function(e) {
             const message = (JSON.parse(e.data));
-            chat.renderMessage({
-                type: "text",
-                text: message.message
-            }, chat.getUser());
+            console.log(message)
+            if(message.message.author != userId){
+                chat.renderMessage({
+                    type: "text",
+                    text: message.message.content
+                },  {
+                    //id: kendo.guid(),
+                    name: message.message.author,
+                    iconUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkGsD8I5_HnpduQhd3Spc2fqboGL5wIsnkaZSFdYmSZLcVzrlK&usqp=CAU"
+                });
+            }
         };
 
         websock.onclose = function(e) {
