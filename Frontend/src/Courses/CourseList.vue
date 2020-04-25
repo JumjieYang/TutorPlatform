@@ -1,6 +1,5 @@
 <template>
   <el-container>
-    <headerchild ref="CourseDetail"></headerchild>
     <el-header>
        <logo></logo>
       <h1>Courses List</h1>
@@ -50,11 +49,11 @@
         </el-table-column>
 
         <el-table-column
-        prop = 'detail'
+        prop = 'id'
         label = 'Course Detail'>
           <template slot-scope="displayList">
             <el-col :span="6">
-              <el-button @click="showDetail(displayList.row.id)"></el-button>
+              <el-button @click="showDetail(displayList.row.id)">course detail</el-button>
             </el-col>
           </template>
         </el-table-column>
@@ -89,13 +88,14 @@
           headers: {'Authorization': 'Token ' + this.$store.state.token}
         })
           .then((response) => {
-            this.courses = response.data
-            for (let course of this.courses) {
+            let courses = response.data
+            for (let course of courses) {
               let courseInfo = {
                 'value': course.subject + '' + course.number,
                 'tutor': course.tutor, 'rating': course.rating, 'id': course.id
               }
               this.displayList.push(courseInfo)
+              this.courses.push(courseInfo)
             }
           })
           .catch((error) => {
@@ -103,29 +103,6 @@
             this.$message.error('Course loading encountered a problem.');
           })
         //this.displayList = this.courses;
-      },
-      loadTutorName() {
-        this.axios.get("/api-user/tutor/" + this.$store.state.userId + '/', {
-          headers: {'Authorization': 'Token ' + this.$store.state.token}
-        })
-          .then((response) => {
-            let info = response.data
-            for (var user of info) {
-              var userInfo = {'value': user.firstName + '' + user.lastName}
-              this.names.push(userInfo)
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$message.error('Please try again.');
-          })
-      },
-      loadAll() {
-        return [
-          {"value": "Comp421", "tutor": "Lee"},
-          {"value": "Comp307", "tutor": "Cornell"},
-          {"value": "Math323", "tutor": "Kobe"}
-        ];
       },
       querySearchAsync(queryString, cb) {
         let courses = this.courses;
@@ -157,12 +134,7 @@
         }
       },
       showDetail(id) {
-        this.$router.push({
-          name: 'Detail',
-          params: {
-            id: id
-          }
-        })
+        this.$router.push({name: 'CourseDetail',params: { id: id }})
       },
     }
   }

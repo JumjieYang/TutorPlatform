@@ -101,7 +101,7 @@ export default new Router({
       component: ShoppingCart
     },
     {
-      path: '/CourseDetail',
+      path: '/courseDetail',
       name: 'CourseDetail',
       component: CourseDetail
     },
