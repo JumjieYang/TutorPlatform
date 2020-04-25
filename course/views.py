@@ -25,7 +25,7 @@ class CourseList(generics.ListAPIView):
     def get_queryset(self):
         queryset = Course.objects.all()
 
-        tutorId = self.request.query_params.get('tutor',None)
+        tutorId = self.request.query_params.get('tutor', None)
         if tutorId is not None:
             return queryset.filter(tutor=tutorId)
         return queryset
