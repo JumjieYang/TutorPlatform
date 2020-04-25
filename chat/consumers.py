@@ -18,7 +18,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps(content))
 
     async def fetch_messages(self, data):
-        messages = Message.objects.filter(room=self.room_group_name).order_by('-created_at').all()[:50]
+        messages = Message.objects.filter(room=self.room_name).order_by('-created_at').all()[:50]
         messages_list = []
         for message in messages:
             messages_list.append({
@@ -36,7 +36,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def new_message(self, data):
         author, text = data['from'], data['text']
         author = User.objects.get(username=author)
-        message = Message.objects.create(author=author, content=text, room=self.room_group_name)
+        message = Message.objects.create(author=author, content=text, room=self.room_name)
         content = {
             'command': 'new_message',
             'message': {
