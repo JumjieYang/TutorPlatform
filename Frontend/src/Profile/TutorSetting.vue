@@ -50,7 +50,7 @@
                             <span>{{course.subject}} {{course.number}}</span>
                             <el-button @click="editCourse(course)" style="float: right; padding: 3px 0" type="text">Edit</el-button>
                         </div>
-                        <el-col :span="12">
+                        <el-col :span="12" :xs="24">
                             <el-image :src="course.image" style="width: 300px; height: 200px; margin-bottom: 10px">
                             <div slot="placeholder" class="image-slot">
                                 Loading<span class="dot">...</span>
@@ -58,7 +58,7 @@
                             </el-image>
                         </el-col>
 
-                        <el-col :span="12">
+                        <el-col :span="12" :xs="24">
                             <p class="text item">
                             {{'Term: ' + course.term}}
                             <br>
@@ -78,7 +78,7 @@
                             </p>
                         </el-col>
                         
-                        </el-card>
+                    </el-card>
                     </el-timeline-item>
                 </el-timeline>
             </el-collapse-item>
@@ -101,7 +101,7 @@ export default {
             subject:'',
             isAvailable:true,
             activeNames: ['2'],
-            courses: '',
+            courses: [],
             dialogVisible: false
         }
     },
@@ -197,8 +197,13 @@ export default {
                 method: "get",
             })
             .then((response) => {
-                this.courses = response.data
-                //console.log(response.data)
+                this.courses = []
+                for(var course of response.data){
+                    if(course.tutor == userId)
+                        this.courses.push(course)
+                }
+                //this.courses = response.data
+                console.log(this.courses)
             })
             .catch((error) => {
                 console.log(error);

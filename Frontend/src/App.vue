@@ -6,8 +6,12 @@
       <!-- <div v-if="newMessagesCount > 0 && !isOpen" class="sc-new-messsages-count">
         {{newMessagesCount}}
       </div> -->
+          <el-badge :value="12" class="item">
+
       <img v-if="isOpen" class="sc-closed-icon" :src="icons.close.img"  :alt="icons.close.name" />
       <img v-else class="sc-open-icon" :src="icons.open.img"  :alt="icons.open.name" />
+        </el-badge>
+
     </div>
     <chat v-show="isOpen" ></chat>
 
@@ -61,6 +65,11 @@ export default {
    color: #2c3e50;
 
  }
+
+.item {
+  margin-top: -130px;
+  margin-right: -45px;
+}
  
  .sc-launcher {
    width: 60px;

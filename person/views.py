@@ -38,3 +38,8 @@ class ProfileDetailView(generics.RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
+
+
+class TutorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = TutorSerializer
+    queryset = Profile.objects.all()

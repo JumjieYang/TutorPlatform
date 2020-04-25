@@ -24,3 +24,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
 
+class TutorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('firstName','lastName','image')
