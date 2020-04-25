@@ -34,13 +34,13 @@
         width="150">
         <template slot-scope="course">
           <el-col :span="6">
-            <el-link icon="el-icon-s-comment" type="primary" :href= "course.row.tutor"></el-link>&nbsp;
+            <el-button icon="el-icon-s-comment" type="primary" @click = "chat()"></el-button>&nbsp;
           </el-col>
         </template>
       </el-table-column>
     </el-table>
     <el-container style="align-self: center">
-      <el-button type="primary" style="float: right" size="small" onclick="addToCart()">Add to cart<i class="el-icon-upload el-icon--right"></i></el-button>
+      <el-button type="primary" style="float: right" size="small" @click="addToCart()">Add to cart<i class="el-icon-upload el-icon--right"></i></el-button>
     </el-container>
   </el-container>
 </template>
@@ -58,14 +58,6 @@
     },
     data(){
       return{
-        information:[
-          {
-            description: 'I am a postgraduate student at McGIll and my major is computer science.I am a postgraduate student at McGIll and my major is computer science.I am a postgraduate student at McGIll and my major is computer science.' +
-              'I am a postgraduate student at McGIll and my major is computer science.vvI am a postgraduate student at McGIll and my major is computer science.I am a postgraduate student at McGIll and my major is computer science.',
-            rating: 3,
-            chatUrl:'/'
-          }
-        ],
         cargo:[
           {
             title: 'Comp421 Final Review',
@@ -82,26 +74,28 @@
         ],
         title: '',
         price: '',
-        course: {}
+        course: [{}],
+        id: this.$route.params.id
       }
     },
     created: function () {
       this.loadCourse(this.$route.params.id);
     },
-    method:{
+    methods:{
       loadCourse(id){
-        this.axios.get("/api-course/course/"+id+'/', {
+        this.axios.get("/api-course/courses/"+id+'/', {
           headers: {'Authorization': 'Token ' + this.$store.state.token}
         })
           .then((response) => {
-            this.courses = response.data
+            this.course.push(response.data)
           })
           .catch((error) => {
             console.log(error);
             this.$message.error('Course loading encountered a problem.');
           })
       },
-      addToCart(){
+       addToCart(){
+        console.log(this.id)
         const instance = this.axios.create({
           headers: {
             Authorization: 'Token '+ this.$store.state.token,
@@ -116,7 +110,7 @@
             user: this.$store.state.userId,
             course: this.course.subject,
           },
-          method: "PATCH",
+          method: "POST",
         })
           .then((response) => {
             console.log(response.data);
@@ -129,14 +123,10 @@
             console.log(error);
             this.$message.error('Please try again.');
           })
-
+      },
+      chat(){
+        this.$router.push({path: '/chat'})
       }
     },
-    props:[]
-
-
   }
 </script>
-
-<style scoped>
-</style>
