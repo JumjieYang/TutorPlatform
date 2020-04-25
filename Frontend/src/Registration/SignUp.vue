@@ -3,12 +3,13 @@
     <el-header><logo></logo></el-header>
     <el-main>
       <div class="login-container">
+        <h4>McGill Tutor Platform</h4>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/Login' }"><i class="el-icon-thumb"></i>Login</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/Login' }"><i class = 'el-icon-thumb'></i>Login</el-breadcrumb-item>
         </el-breadcrumb>
         <el-form>
           <div class="title-container">
-            <h3 class="title">Sign Up page</h3>
+            <h3 class="title">SignUp Page</h3>
           </div>
 
           <el-form-item id = 'username'>
@@ -58,23 +59,36 @@
         submit() {
             console.log(666);
             const vm = this;
-            this.axios.post("http://localhost:8000/api-auth/register/", {
+            this.axios.post("/api-auth/register/", {
                 username: this.username,
                 password: this.password
             })
             .then(function (response) {
                 console.log(response);
-                vm.$router.push('/Login')
+                vm.login()
                 vm.$message({
-                    message: 'Sign up sussessfully! Please log in.',
+                    message: 'Sign up sussessfully! Please create your personal profile.',
                     type: 'success'
                 });
             })
             .catch(function (error) {
-                vm.$message.error('Error. Maybe you entered a existing username.');
+                vm.$message.error('Error. Please try again.');
                 console.log(error);
             });
         },
+        login(){
+          const vm = this;
+          this.$store.dispatch('retrieveToken',  {
+            username: this.username,
+            password: this.password
+          })
+          .then(function (response) {
+            vm.$router.push('/CreateProfile')
+          })
+          .catch(function (error) {
+            vm.$message.error('Please try again.');
+          });
+        }
     },
 
   }

@@ -9,9 +9,9 @@ import Search from '@/Courses/Search'
 import HomePage from '@/Home/HomePage'
 import logo from '@/Home/Logo'
 import ShoppingCart from '@/Courses/ShopingCart'
-import Chat from '@/Chat/Chat'
 import CourseDetail from "../Courses/CourseDetail";
 import aboutUs from "../Home/aboutUs";
+import CreateProfile from '@/Registration/CreateProfile'
 
 Vue.use(Router)
 
@@ -21,14 +21,6 @@ export default new Router({
       path: '/',
       name: 'Hello',
       component: Hello,
-      meta: {
-        requiresAuth: true,
-      }
-    },
-    {
-      path: '/Chat',
-      name: 'Chat',
-      component: Chat,
       meta: {
         requiresAuth: true,
       }
@@ -55,6 +47,14 @@ export default new Router({
       component: SignUp,
       meta: {
         requiresVisitor: true,
+      }
+    },
+    {
+      path: '/CreateProfile',
+      name: 'CreateProfile',
+      component: CreateProfile,
+      meta: {
+        requiresAuth: true,
       }
     },
     {
@@ -105,11 +105,7 @@ export default new Router({
       name: 'CourseDetail',
       component: CourseDetail
     },
-    {
-      path :'/Chat',
-      name: 'Chat',
-      component: Chat
-    }
+
 
   ]
 })
