@@ -34,7 +34,7 @@
         width="150">
         <template slot-scope="course">
           <el-col :span="6">
-            <el-link icon="el-icon-s-comment" type="primary" :href= "course.row.tutor"></el-link>&nbsp;
+            <el-button icon="el-icon-s-comment" type="primary" @click = "chat()"></el-button>&nbsp;
           </el-col>
         </template>
       </el-table-column>
@@ -123,6 +123,9 @@
             console.log(error);
             this.$message.error('Please try again.');
           })
+      },
+      chat(){
+        this.$router.push({path: '/chat'})
       }
     },
   }
