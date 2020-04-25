@@ -1,10 +1,5 @@
 <template>
   <div class="block">
-    <el-card v-if="this.orders == null" shadow="always">
-      <div>
-        No order history. Place your first order!
-      </div>
-    </el-card>
     <el-timeline>
       <el-timeline-item v-for="(order,index) of orders" :key="index"  placement="top">
         <el-card>
@@ -23,6 +18,28 @@ export default {
     data() {
         return {
             orders: ''
+        // timeline: [
+        //     {
+        //     timestamp: '2019/4/20',
+        //     title: 'Comp 424',
+        //     content: 'Midterm Prep'
+        //     },
+        //     {
+        //     timestamp: '2019/4/21',
+        //     title: 'Comp 535',
+        //     content: 'Project help'
+        //     },
+        //     {
+        //     timestamp: '2019/4/22',
+        //     title: 'Comp 421',
+        //     content: 'Assignment asistance'
+        //     },
+        //     {
+        //     timestamp: '2019/4/23',
+        //     title: 'Comp 360',
+        //     content: 'Tutorial'
+        //     }
+        // ]
         }
     },
     mounted(){

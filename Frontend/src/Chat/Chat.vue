@@ -76,6 +76,5 @@ export default {
         animation-duration: 0.3s;
         animation-timing-function: ease-in-out;
         opacity: 1;
-        z-index : 1000
     }
 </style>

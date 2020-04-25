@@ -16,6 +16,7 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
 class CourseList(generics.ListAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    lookup_field = "tutor"
 
     def get_authenticators(self):
         return ()
