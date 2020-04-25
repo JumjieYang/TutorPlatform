@@ -10,7 +10,6 @@
                 <el-menu-item index="/shopingCart">ShopingCart</el-menu-item>
             </el-submenu>
             <el-menu-item index="/Profile">Profile</el-menu-item>
-            <el-menu-item @click="logOut"  index="/Login">Log out</el-menu-item>
         </el-menu>
     </el-col>
     <el-col :span="2">

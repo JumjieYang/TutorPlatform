@@ -7,24 +7,32 @@
       <el-breadcrumb-item :to="{ path: '/Profile' }">Profile</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
-    <el-table :data="tableData" border style="width: 100%" @selection-change="selected">
+    <el-table :data="cartInfo" border style="width: 100%" @selection-change="selected">
       <el-table-column type="selection" width="50"> </el-table-column>
-      <el-table-column label="Course Title" width="680" align="align-self: center">
-        <template scope="scope">
+      <el-table-column label="Course Title" width="500" align="align-self: center">
+        <template slot-scope="cartInfo">
           <div style="margin-left: 50px">
-            <span style="font-size: 18px;padding-left: 200px;">{{scope.row.title}}</span>
+            <span style="font-size: 18px;padding-left: 200px;">{{cartInfo.row.title}}</span>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="Price" width="150" prop="price"></el-table-column>
+
+      <el-table-column label="Price" width="150" prop="price">
+        <template slot-scope="cartInfo">
+          <div style="margin-left: 50px">
+            <span style="font-size: 18px;padding-left: 200px;">{{cartInfo.row.title}}</span>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="Quantity" width="200">
-        <template scope="scope">
+
+        <template slot-scope="cartInfo">
           <div>
-            <el-input v-model="scope.row.quantity" @change="handleInput(scope.row)">
-              <el-button slot="prepend" @click="del(scope.row)">
+            <el-input v-model="cartInfo.row.quantity" @change="handleInput(cartInfo.row)">
+              <el-button slot="prepend" @click="del(cartInfo.row)">
                 <i class="el-icon-minus"></i>
               </el-button>
-              <el-button slot="append" @click="add(scope.row)">
+              <el-button slot="append" @click="add(cartInfo.row)">
                 <i class="el-icon-plus"></i>
               </el-button>
             </el-input>
@@ -55,30 +63,18 @@
       return {
         tableData: [
           {
-
             title: 'Comp421 Final Review',
             price: 149,
             quantity: 1,
             totalPrice: 149,
           },
+        ],
+          cartInfo: [
           {
-
-            title: 'Comp307 Project Help',
-            price: 29,
-            quantity: 1,
-            totalPrice: 29,
-          },
-          {
-            title: 'Math324 Final Practice',
-            price: 14.9,
-            quantity: 1,
-            totalPrice: 14.9,
-          },
-          {
-            title: 'ECSE321 Assignment Debug',
-            price: 79,
-            quantity: 1,
-            totalPrice: 79,
+            title:''
+           ,price:''
+           ,quantity:''
+           ,totalPrice:''
           }
         ],
         moneyTotal: 0,
@@ -86,6 +82,22 @@
       }
     },
     methods: {
+      loadCart(){
+        this.axios.get("/api-course/carts/",{
+          headers: { 'Authorization' : 'Token '+ this.$store.state.token}
+        })
+          .then((response) => {
+            let carts = response.data
+            for (let cart of carts) {
+              this.cartInfo.push({'title': cart.course + '',
+                'price':cart.total, 'quantity': 1, 'totalPrice':cart.total})
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$message.error('Please try again.');
+          })
+      },
       handleDelete(index, row) {
         this.$confirm('Are you sure about delete that course？', 'Warning', {
           confirmButtonText: 'confirm',

@@ -7,7 +7,7 @@
     <br><br><br><br> <br><br>
     <el-table
       id = 'courses'
-      :data="information"
+      :data="course"
       height="350"
       border
       style="width: 100%">
@@ -24,17 +24,17 @@
         prop="evaValue"
         label="Rating"
         score-template="{rating}">
-        <template slot-scope="scope">
-          <el-rate v-model="scope.row.rating" :allow-half="true"  show-score disabled text-color="#ff9900"></el-rate>
+        <template slot-scope="course">
+          <el-rate v-model="course.row.rating" :allow-half="true"  show-score disabled text-color="#ff9900"></el-rate>
         </template>
       </el-table-column>
       <el-table-column
         prop = 'chat'
         label = 'Chat With Tutor'
         width="150">
-        <template slot-scope="scope">
+        <template slot-scope="course">
           <el-col :span="6">
-            <el-link icon="el-icon-s-comment" type="primary" :href= "scope.row.chatUrl"></el-link>&nbsp;
+            <el-link icon="el-icon-s-comment" type="primary" :href= "course.row.tutor"></el-link>&nbsp;
           </el-col>
         </template>
       </el-table-column>
@@ -81,27 +81,58 @@
           }
         ],
         title: '',
-        price: ''
+        price: '',
+        course: {}
       }
-
+    },
+    created: function () {
+      this.loadCourse(this.$route.params.id);
     },
     method:{
-      loadcourse(){
-
+      loadCourse(id){
+        this.axios.get("/api-course/course/"+id+'/', {
+          headers: {'Authorization': 'Token ' + this.$store.state.token}
+        })
+          .then((response) => {
+            this.courses = response.data
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$message.error('Course loading encountered a problem.');
+          })
       },
       addToCart(){
-        let course = {title:'',
-          price:'',
-          quantity:'',
-          totalPrice:''
-        };
-        course.title = this.title;
-        course.price = this.price;
-        course.quantity = 1;
-        course.totalPrice = this.price;
-        this.cargo.push(course);
+        const instance = this.axios.create({
+          headers: {
+            Authorization: 'Token '+ this.$store.state.token,
+            'Content-Type': 'application/json'
+          },
+        });
+        instance({
+          url: '/api-course/carts/',
+          data: {
+            number: this.course.number,
+            total: this.course.price,
+            user: this.$store.state.userId,
+            course: this.course.subject,
+          },
+          method: "PATCH",
+        })
+          .then((response) => {
+            console.log(response.data);
+            this.$message({
+              message: 'add to cart sussessfully!',
+              type: 'success'
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$message.error('Please try again.');
+          })
+
       }
-    }
+    },
+    props:[]
 
 
   }

@@ -5,13 +5,12 @@
     <el-main>
       <div class="login-container">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/Home'}">Home Page</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/SignUp' }">Sign Up</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/SignUp' }"><i class="el-icon-thumb"></i>Sign Up</el-breadcrumb-item>
         </el-breadcrumb>
 
         <el-form>
           <div class="title-container">
-            <h3 class="title">Tutor Platform</h3>
+            <h3 class="title">Login Page</h3>
           </div>
 
           <el-form-item>

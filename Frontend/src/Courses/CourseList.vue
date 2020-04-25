@@ -1,10 +1,10 @@
 <template>
   <el-container>
+    <headerchild ref="CourseDetail"></headerchild>
     <el-header>
-      <!-- <logo></logo> -->
+       <logo></logo>
       <h1>Courses List</h1>
     </el-header>
-
     <br><br><br><br>
     <el-breadcrumb separator="/">
       <el-breadcrumb-item  :to="{ path: '/Home' }"><i class = "el-icon-caret-left"></i>Home Page</el-breadcrumb-item>
@@ -50,18 +50,11 @@
         </el-table-column>
 
         <el-table-column
-        prop="photo"
-        label="photo"
-        width="250">
-
-      </el-table-column>
-
-        <el-table-column
         prop = 'detail'
         label = 'Course Detail'>
-          <template slot-scope="scope">
+          <template slot-scope="displayList">
             <el-col :span="6">
-              <el-link icon="el-icon-info" type="primary" :href= "scope.row.url"></el-link>&nbsp;
+              <el-button @click="showDetail(displayList.row.id)"></el-button>
             </el-col>
           </template>
         </el-table-column>
@@ -71,46 +64,67 @@
 <script>
   import Logo from '../Home/Logo'
   import Search from "./Search";
+  import CourseDetail from './CourseDetail'
   export default {
-    components:{
+    components: {
       Logo,
-      Search
+      Search,
+      CourseDetail
     },
     data() {
       return {
         courses: [],
         state: '',
-        timeout:  null,
-        displayList: []
+        timeout: null,
+        displayList: [],
+        names: []
       }
     },
-    created: function(){
+    created: function () {
       this.loadCourse();
     },
     methods: {
-      loadCourse(){
-        this.axios.get("/api-course/courses/",{
-            headers: { 'Authorization' : 'Token '+ this.$store.state.token}
+      loadCourse() {
+        this.axios.get("/api-course/courses/", {
+          headers: {'Authorization': 'Token ' + this.$store.state.token}
         })
-        .then((response) => {
-            var courses = response.data
-            for (var course of courses) {
-                var courseInfo = {'value': course.subject + '' + course.number,
-                                'tutor': course.tutor, 'rating': course.rating, 'photo':course.description, 'url': '/'}
-                this.displayList.push(courseInfo)
+          .then((response) => {
+            this.courses = response.data
+            for (let course of this.courses) {
+              let courseInfo = {
+                'value': course.subject + '' + course.number,
+                'tutor': course.tutor, 'rating': course.rating, 'id': course.id
+              }
+              this.displayList.push(courseInfo)
             }
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$message.error('Course loading encountered a problem.');
+          })
+        //this.displayList = this.courses;
+      },
+      loadTutorName() {
+        this.axios.get("/api-user/tutor/" + this.$store.state.userId + '/', {
+          headers: {'Authorization': 'Token ' + this.$store.state.token}
         })
-        .catch((error) => {
+          .then((response) => {
+            let info = response.data
+            for (var user of info) {
+              var userInfo = {'value': user.firstName + '' + user.lastName}
+              this.names.push(userInfo)
+            }
+          })
+          .catch((error) => {
             console.log(error);
             this.$message.error('Please try again.');
-        })
-        //this.displayList = this.courses;
+          })
       },
       loadAll() {
         return [
-          { "value": "Comp421", "tutor": "Lee" },
-          { "value": "Comp307", "tutor": "Cornell" },
-          { "value": "Math323", "tutor": "Kobe" }
+          {"value": "Comp421", "tutor": "Lee"},
+          {"value": "Comp307", "tutor": "Cornell"},
+          {"value": "Math323", "tutor": "Kobe"}
         ];
       },
       querySearchAsync(queryString, cb) {
@@ -135,14 +149,21 @@
       handleClick() {
         this.displayList = this.courses;
       },
-      refresh(){
+      refresh() {
         this.displayList = [];
-        for(let i = 0; i < this.courses.length; ++i){
+        for (let i = 0; i < this.courses.length; ++i) {
           this.displayList.push(this.courses[i]);
           console.log(this.displayList[i]);
         }
-      }
-
-    },
+      },
+      showDetail(id) {
+        this.$router.push({
+          name: 'Detail',
+          params: {
+            id: id
+          }
+        })
+      },
+    }
   }
 </script>
