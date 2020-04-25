@@ -73,10 +73,6 @@
         })
           .then(function (response) {
             vm.$router.push('/Home')
-            vm.$message({
-                message: 'Profile was created sussessfully!',
-                type: 'success'
-            });
           })
           .catch(function (error) {
             vm.$message.error('Please try again.');

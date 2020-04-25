@@ -58,36 +58,23 @@
         submit() {
             console.log(666);
             const vm = this;
-            this.axios.post("/api-auth/register/", {
+            this.axios.post("http://localhost:8000/api-auth/register/", {
                 username: this.username,
                 password: this.password
             })
             .then(function (response) {
                 console.log(response);
-                vm.login()
+                vm.$router.push('/Login')
                 vm.$message({
-                    message: 'Sign up sussessfully! Please create your personal profile.',
+                    message: 'Sign up sussessfully! Please log in.',
                     type: 'success'
                 });
             })
             .catch(function (error) {
-                vm.$message.error('Error. Please try again.');
+                vm.$message.error('Error. Maybe you entered a existing username.');
                 console.log(error);
             });
         },
-        login(){
-          const vm = this;
-          this.$store.dispatch('retrieveToken',  {
-            username: this.username,
-            password: this.password
-          })
-          .then(function (response) {
-            vm.$router.push('/CreateProfile')
-          })
-          .catch(function (error) {
-            vm.$message.error('Please try again.');
-          });
-        }
     },
 
   }
