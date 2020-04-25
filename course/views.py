@@ -16,13 +16,18 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
 class CourseList(generics.ListAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    lookup_field = "tutor"
 
     def get_authenticators(self):
         return ()
 
     def get_permissions(self):
         return ()
+
+    def get_queryset(self):
+        tutorId = self.request.query_params.get('tutor',None)
+        if tutorId is not None:
+            return self.queryset.filter(tutor=tutorId)
+        return self.queryset
 
 
 class CreateCart(generics.ListCreateAPIView):

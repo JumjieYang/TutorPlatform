@@ -37,6 +37,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         author, text = data['from'], data['text']
         author = User.objects.get(username=author)
         message = Message.objects.create(author=author, content=text, room=self.room_name)
+        message.save()
         content = {
             'command': 'new_message',
             'message': {
