@@ -1,4 +1,3 @@
-from drf_base64.fields import Base64ImageField
 from rest_framework import serializers
 from .models import *
 from rest_framework.authtoken.models import Token
@@ -21,8 +20,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    image = Base64ImageField(required=False)
-
     class Meta:
         model = Profile
         fields = '__all__'
@@ -30,6 +27,5 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class TutorSerializer(serializers.ModelSerializer):
     class Meta:
-        image = Base64ImageField(required=False)
         model = Profile
         fields = ('firstName', 'lastName', 'image')
