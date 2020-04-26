@@ -8,3 +8,4 @@ drf_base64
 coreapi
 django-rest-swagger
 channels-redis
+Pillow
