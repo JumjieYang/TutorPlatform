@@ -88,7 +88,6 @@ class Course_Test(APITestCase):
             'user': 1,
             'course': self.course.id
         }
-        print(data)
         response = self.client.post(url, data)
         self.assertEqual(response.status_code,status.HTTP_201_CREATED)
         response = response.json()
