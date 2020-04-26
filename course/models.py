@@ -25,7 +25,7 @@ class Course(models.Model):
 
 class ShoppingCart(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id')
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, to_field='id')
     number = models.IntegerField(default=0)
     total = models.IntegerField(default=0)
