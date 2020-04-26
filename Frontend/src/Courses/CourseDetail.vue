@@ -100,9 +100,9 @@
             number: 1,
             total: this.course[0].price,
             user: this.$store.state.userId,
-            course: this.course[0].subject + this.course[0].number,
+            course: this.course[0].id,
           },
-          method: "post",
+          method: "patch",
         })
           .then((response) => {
             console.log(response.data);

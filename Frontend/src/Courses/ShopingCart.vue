@@ -20,7 +20,7 @@
       <el-table-column label="Price" width="150" prop="price">
         <template slot-scope="cartInfo">
           <div style="margin-left: 50px">
-            <span style="font-size: 18px;padding-left: 200px;">{{cartInfo.row.title}}</span>
+            <span style="font-size: 18px;padding-left: 200px;">{{cartInfo.row.price}}</span>
           </div>
         </template>
       </el-table-column>
@@ -49,7 +49,7 @@
       </el-table-column>
     </el-table> <br>
     <el-button type="info" >{{"Total Price：" + moneyTotal}}</el-button>
-    <el-button type="primary" style="float: right" size="small" @click="submitBtn()">Check Out<i class="el-icon-upload el-icon--right"></i></el-button>
+    <el-button type="primary" style="float: right" size="small" @click="location.href='http://localhost:63342/TutorPlatform/Frontend/pay.html?_ijt=glgpec53ofklg2cqin0oq8m1if'">Check Out<i class="el-icon-upload el-icon--right"></i></el-button>
   </div>
 </template>
 <script>
@@ -74,6 +74,9 @@
         multipleSelection: [],
       }
     },
+    mounted() {
+      this.loadCart();
+    },
     methods: {
       loadCart(){
         this.axios.get("/api-course/carts/",{
@@ -82,7 +85,7 @@
           .then((response) => {
             let carts = response.data
             for (let cart of carts) {
-              this.cartInfo.push({'title': cart.user + '',
+              this.cartInfo.push({'title': cart.course + '',
                 'price':cart.total, 'quantity': 1, 'totalPrice':cart.total})
             }
           })
@@ -148,6 +151,7 @@
       },
       submitBtn: function (){
           // this.$router.push({path:'/index.html'})
+        window.location.herf = "http://localhost:63342/TutorPlatform/Frontend/pay.html?_ijt=glgpec53ofklg2cqin0oq8m1if"
       }
     }
   }
