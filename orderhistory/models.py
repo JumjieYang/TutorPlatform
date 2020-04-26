@@ -11,5 +11,6 @@ class OrderHistory(models.Model):
     amount = models.FloatField()
     rating = models.FloatField(null=True)
     address = models.CharField(max_length=30)
+    paymentId = models.CharField(max_length = 100, null=True)
     owner = models.ForeignKey(User,on_delete= CASCADE,to_field='id')
     cart = models.ForeignKey(ShoppingCart, on_delete=CASCADE, to_field='id')

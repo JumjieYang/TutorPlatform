@@ -10,7 +10,7 @@ from course.models import Course, ShoppingCart
 from orderhistory.models import OrderHistory
 
 
-class Test_auth(APITestCase):
+class Test_order(APITestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(username='testUser', password='qwerty')

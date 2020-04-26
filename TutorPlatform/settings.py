@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'person',
     'course',
     'orderhistory',
+    'pay',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
