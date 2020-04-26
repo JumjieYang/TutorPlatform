@@ -12,7 +12,6 @@ import ShoppingCart from '@/Courses/ShopingCart'
 import CourseDetail from "../Courses/CourseDetail";
 import aboutUs from "../Home/aboutUs";
 import CreateProfile from '@/Registration/CreateProfile'
-import Chat from "../Chat/Chat";
 
 Vue.use(Router)
 

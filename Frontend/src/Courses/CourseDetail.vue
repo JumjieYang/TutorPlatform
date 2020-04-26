@@ -18,7 +18,6 @@
           width="400"
         >
         </el-table-column>
-        <i class = 'el-icon-info'>info</i>
       </div>
       <el-table-column
         prop="evaValue"
@@ -40,7 +39,7 @@
       </el-table-column>
     </el-table>
     <el-container style="align-self: center">
-      <el-button type="primary" style="float: right" size="small" @click="addToCart()">Add to cart<i class="el-icon-upload el-icon--right"></i></el-button>
+      <el-button type="primary" style="float: right" size="small" @click="addToCart">Add to cart<i class="el-icon-upload el-icon--right"></i></el-button>
     </el-container>
   </el-container>
 </template>
@@ -58,23 +57,9 @@
     },
     data(){
       return{
-        cargo:[
-          {
-            title: 'Comp421 Final Review',
-            price: 149,
-            quantity: 1,
-            totalPrice: 149,
-          },
-          {
-            title: 'Comp307 Project Help',
-            price: 29,
-            quantity: 1,
-            totalPrice: 29,
-          }
-        ],
-        title: '',
-        price: '',
-        course: [{}],
+        subject: 'fun',
+        price: 20,
+        course: [],
         id: this.$route.params.id
       }
     },
@@ -83,10 +68,11 @@
     },
     methods:{
       loadCourse(id){
-        this.axios.get("/api-course/courses/"+id+'/', {
+        this.axios.get("/api-course/course/"+id+'', {
           headers: {'Authorization': 'Token ' + this.$store.state.token}
         })
           .then((response) => {
+            console.log(response.data)
             this.course.push(response.data)
           })
           .catch((error) => {
@@ -94,8 +80,14 @@
             this.$message.error('Course loading encountered a problem.');
           })
       },
+       test(){
+         console.log(this.course[0].subject + this.course[0].number)
+         console.log(this.course[0].price)
+         console.log(this.$store.state.userId)
+       },
        addToCart(){
         console.log(this.id)
+         const userId = this.$store.state.userId
         const instance = this.axios.create({
           headers: {
             Authorization: 'Token '+ this.$store.state.token,
@@ -105,12 +97,12 @@
         instance({
           url: '/api-course/carts/',
           data: {
-            number: this.course.number,
-            total: this.course.price,
+            number: 1,
+            total: this.course[0].price,
             user: this.$store.state.userId,
-            course: this.course.subject,
+            course: this.course[0].subject + this.course[0].number,
           },
-          method: "POST",
+          method: "post",
         })
           .then((response) => {
             console.log(response.data);
