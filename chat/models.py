@@ -17,10 +17,14 @@ def validate_content(content):
         )
 
 
+
 class Message(models.Model):
     id = models.UUIDField(primary_key=True, null=False, default=uuid.uuid4, editable=False)
     author = models.ForeignKey(User, blank=False, null=False,
                                related_name='author_messages', on_delete=models.CASCADE, to_field='username')
     content = models.TextField(validators=[validate_content])
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
-    room = models.CharField(max_length=100,null=False)
+    room = models.IntegerField(blank=False, null=False)
+
+    def past_messages(roomNumber):
+        return Message.objects.filter(room=roomNumber).order_by('-created_at').all()

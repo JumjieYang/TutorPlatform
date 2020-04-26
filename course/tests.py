@@ -44,7 +44,7 @@ class Course_Test(APITestCase):
 
     def test_get_courses(self):
         self.client.credentials(HTTP_AUTHORIZATION='')
-        url = reverse('course_list', args=[1])
+        url = reverse('course_list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response = response.json()
