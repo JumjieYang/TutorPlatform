@@ -1,6 +1,7 @@
 <template>
   <div id = 'app'>
     <logo></logo>
+    <h1>Shopping Cart</h1>
     <br><br>
     <el-breadcrumb separator="|">
       <el-breadcrumb-item  :to="{ path: '/Home' }"><i class = "el-icon-caret-left"></i>Home Page</el-breadcrumb-item>
@@ -18,14 +19,8 @@
       </el-table-column>
 
       <el-table-column label="Price" width="150" prop="price">
-        <template slot-scope="cartInfo">
-          <div style="margin-left: 50px">
-            <span style="font-size: 18px;padding-left: 200px;">{{cartInfo.row.price}}</span>
-          </div>
-        </template>
       </el-table-column>
       <el-table-column label="Quantity" width="200">
-
         <template slot-scope="cartInfo">
           <div>
             <el-input v-model="cartInfo.row.quantity" @change="handleInput(cartInfo.row)">
@@ -61,15 +56,7 @@
     },
     data() {
       return {
-        tableData: [
-          {
-            title: 'Comp421 Final Review',
-            price: 149,
-            quantity: 1,
-            totalPrice: 149,
-          },
-        ],
-          cartInfo: [],
+        cartInfo: [],
         moneyTotal: 0,
         multipleSelection: [],
       }
@@ -84,9 +71,16 @@
         })
           .then((response) => {
             let carts = response.data
-            for (let cart of carts) {
-              this.cartInfo.push({'title': cart.course + '',
-                'price':cart.total, 'quantity': 1, 'totalPrice':cart.total})
+            for (let [index,cart] of carts.entries()) {
+              this.cartInfo.push({'title': carts[index].course + '',
+                'price':carts[index].total, 'quantity': 1, 'totalPrice':carts[index].total,'id':carts[index].id})
+              this.axios.get("/api-course/course/"+carts[index].course,{
+                headers: {'Authorization': 'Token ' + this.$store.state.token}
+              })
+                .then((response) => {
+                  let course = response.data
+                  this.cartInfo[index].title = course.subject+' '+course.number
+                })
             }
           })
           .catch((error) => {
@@ -140,18 +134,19 @@
         this.multipleSelection = selection;
         this.moneyTotal = 0;
         for (let i = 0; i < selection.length; i++) {
-          //to see if the return data tyoe is string
+          //to see if the return data type is string
           if (typeof selection[i].totalPrice == 'string') {
             selection[i].totalPrice = parseInt(selection[i].totalPrice);
           }
           ;
           this.moneyTotal += selection[i].totalPrice;
-
         }
       },
       submitBtn: function (){
-          // this.$router.push({path:'/index.html'})
-        window.location.herf = "http://localhost:63342/TutorPlatform/Frontend/pay.html?_ijt=glgpec53ofklg2cqin0oq8m1if"
+        // for(let [index,cart] of this.cartInfo.entries()){
+        //   this.cartInfo[index].tot
+        // }
+        // this.cartInfo[]
       }
     }
   }

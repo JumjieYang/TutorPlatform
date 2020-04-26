@@ -94,15 +94,29 @@
                 'value': course.subject + '' + course.number,
                 'tutor': course.tutor, 'rating': course.rating, 'id': course.id
               }
+              this.axios.get("/api-user/profile/"+courseInfo.tutor+'/',{
+                headers: {'Authorization': 'Token ' + this.$store.state.token}
+              })
+                .then((response) => {
+                  let profile = response.data
+                  courseInfo.tutor = profile.firstName+' '+profile.lastName
+                })
               this.displayList.push(courseInfo)
               this.courses.push(courseInfo)
             }
-          })
+    })
           .catch((error) => {
             console.log(error);
             this.$message.error('Course loading encountered a problem.');
           })
         //this.displayList = this.courses;
+      },
+      castTutorName(){
+        for(let course of this.courses){
+          let courseWithTutor = {
+
+          }
+        }
       },
       querySearchAsync(queryString, cb) {
         let courses = this.courses;
