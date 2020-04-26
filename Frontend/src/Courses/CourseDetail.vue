@@ -102,7 +102,7 @@
             user: this.$store.state.userId,
             course: this.course[0].id,
           },
-          method: "patch",
+          method: "post",
         })
           .then((response) => {
             console.log(response.data);

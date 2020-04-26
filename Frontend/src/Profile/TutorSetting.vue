@@ -58,7 +58,7 @@
                             </el-image>
                         </el-col>
 
-                        <el-col :span="12" :xs="24">
+                        <el-col :span="15" :xs="24">
                             <p class="text item">
                             {{'Term: ' + course.term}}
                             <br>
@@ -66,7 +66,9 @@
                             <br>
                             {{'Is available: ' + course.isAvailable}}
                             <br>
-                            {{'Description: '+course.escription}}
+                            {{'Description: '}}
+                              <br>
+                              {{course.description}}
                             <br><br>
                             <el-rate
                                 v-model= course.rating
@@ -74,10 +76,10 @@
                                 show-score
                                 text-color="#ff9900"
                                 score-template="{value}">
-                            </el-rate>                            
+                            </el-rate>
                             </p>
                         </el-col>
-                        
+
                     </el-card>
                     </el-timeline-item>
                 </el-timeline>
@@ -126,9 +128,8 @@ export default {
                 'Content-Type': 'application/json'
             },
             });
-            //console.log(this.$store.state.userName);
             instance({
-                url: '/api-course/courses/'+this.courseId,
+                url: '/api-course/course/'+this.courseId,
                 method: "DELETE",
             })
             .then((response) => {
@@ -154,7 +155,7 @@ export default {
                 },
             });
             instance({
-                url: '/api-course/courses/'+this.courseId,
+                url: '/api-course/course/'+this.courseId,
                 data: {
                     subject: this.subject,
                     number: this.number,
@@ -178,7 +179,7 @@ export default {
                 console.log(error);
                 this.$message.error('Please try again.');
             })
-            
+
         },
         update(activeNames){
             this.activeNames = activeNames
