@@ -75,7 +75,7 @@
           .then(function (response) {
             vm.$router.push('/Home')
             vm.$message({
-                message: 'Profile was created sussessfully!',
+                message: 'Login Succeed!',
                 type: 'success'
             });
           })
