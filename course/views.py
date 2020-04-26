@@ -31,7 +31,7 @@ class CourseList(generics.ListAPIView):
         return queryset
 
 
-class CreateCart(generics.ListCreateAPIView):
+class CartList(generics.ListCreateAPIView):
     queryset = ShoppingCart.objects.all()
 
     def get_serializer_class(self):

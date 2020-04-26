@@ -4,7 +4,7 @@ Django==3.0.4
 django-cors-headers
 webdriver-manager
 djangorestframework
-Pillow
+drf_base64
 coreapi
 django-rest-swagger
 channels-redis
