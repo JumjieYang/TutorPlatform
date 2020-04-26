@@ -85,12 +85,17 @@ class Course_Test(APITestCase):
     def test_cart_create(self):
         url = reverse('cart_list')
         data = {
-            'user': 1,
+            'number': 1,
+            'total': 50,
+            'user': self.user.id,
             'course': self.course.id
+
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code,status.HTTP_201_CREATED)
         response = response.json()
+        self.assertEqual(response['number'],1)
+        self.assertEqual(response['total'],50)
         self.assertEqual(response['user'],self.user.id)
         self.assertEqual(response['course'],self.course.id)
         self.assertEqual(ShoppingCart.objects.count(),1)
