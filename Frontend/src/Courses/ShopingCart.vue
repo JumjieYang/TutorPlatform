@@ -7,7 +7,7 @@
       <el-breadcrumb-item :to="{ path: '/Profile' }">Profile</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
-    <el-table :data="cartInfo" border style="width: 100%" @selection-change="selected">
+    <el-table :data="cartInfo" border style="width: 100%" @selection-change="selected"empty-text="No item found">
       <el-table-column type="selection" width="50"> </el-table-column>
       <el-table-column label="Course Title" width="500" align="align-self: center">
         <template slot-scope="cartInfo">
@@ -49,7 +49,7 @@
       </el-table-column>
     </el-table> <br>
     <el-button type="info" >{{"Total Price：" + moneyTotal}}</el-button>
-    <el-button type="primary" style="float: right" size="small" onclick="submitBtn">Check Out<i class="el-icon-upload el-icon--right"></i></el-button>
+    <el-button type="primary" style="float: right" size="small" @click="submitBtn()">Check Out<i class="el-icon-upload el-icon--right"></i></el-button>
   </div>
 </template>
 <script>
@@ -69,14 +69,7 @@
             totalPrice: 149,
           },
         ],
-          cartInfo: [
-          {
-            title:''
-           ,price:''
-           ,quantity:''
-           ,totalPrice:''
-          }
-        ],
+          cartInfo: [],
         moneyTotal: 0,
         multipleSelection: [],
       }
@@ -89,7 +82,7 @@
           .then((response) => {
             let carts = response.data
             for (let cart of carts) {
-              this.cartInfo.push({'title': cart.course + '',
+              this.cartInfo.push({'title': cart.user + '',
                 'price':cart.total, 'quantity': 1, 'totalPrice':cart.total})
             }
           })
@@ -104,7 +97,7 @@
           cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
-          this.tableData.splice(index,1);
+          this.cartInfo.splice(index,1);
           this.$message({type: 'success', message: 'Deletion success!'});
         }).catch(() => {
           this.$message({type: 'info', message: 'Deletion canceled'});
@@ -154,7 +147,7 @@
         }
       },
       submitBtn: function (){
-
+          // this.$router.push({path:'/index.html'})
       }
     }
   }
