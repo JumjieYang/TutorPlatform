@@ -182,6 +182,7 @@
                 message: 'Order placed sussessfully!',
                 type: 'success'
               });
+              this.$router.push({path:"/pay"})
             })
             .catch((error) => {
               console.log(error);

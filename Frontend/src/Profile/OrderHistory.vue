@@ -19,7 +19,6 @@
             <p>{{ 'Order Date ' +order.date }}</p>
             <el-rate
                 v-model="order.rating"
-                disabled
                 show-score
                 text-color="#ff9900">
             </el-rate>

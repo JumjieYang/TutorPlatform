@@ -20,12 +20,16 @@
         </el-table-column>
       </div>
       <el-table-column
-        prop="evaValue"
+        prop="rating"
         label="Rating"
         score-template="{rating}">
         <template slot-scope="course">
           <el-rate v-model="course.row.rating" :allow-half="true"  show-score disabled text-color="#ff9900"></el-rate>
         </template>
+      </el-table-column>
+      <el-table-column
+      prop = "price"
+      label="Price">
       </el-table-column>
       <el-table-column
         prop = 'chat'

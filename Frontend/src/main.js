@@ -1,6 +1,8 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import VueCardPayment from 'vue-card-payment'
+import 'vue-card-payment/dist/vue-card-payment.css'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@progress/kendo-ui'
@@ -15,6 +17,7 @@ import {store} from './store/store'
 Vue.use(Element)
 Vue.use(ChatInstaller)
 Vue.use(VueAxios, axios)
+Vue.use(VueCardPayment)
 
 axios.defaults.baseURL = 'http://localhost:8000/';
 Vue.config.productionTip = false
