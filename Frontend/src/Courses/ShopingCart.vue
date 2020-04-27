@@ -44,7 +44,20 @@
       </el-table-column>
     </el-table> <br>
     <el-button type="info" >{{"Total Price：" + moneyTotal}}</el-button>
-    <el-button type="primary" style="float: right" size="small" @click="location.href='http://localhost:63342/TutorPlatform/Frontend/pay.html?_ijt=glgpec53ofklg2cqin0oq8m1if'">Check Out<i class="el-icon-upload el-icon--right"></i></el-button>
+    <el-button type="primary" style="float: right" size="small" @click="submitBtn()">Check Out<i class="el-icon-upload el-icon--right"></i></el-button>
+    <el-form>
+      <div class="title-container">
+        <h5 class="title">Please enter your address</h5>
+      </div>
+
+      <el-form-item>
+        <el-input
+          placeholder="Address"
+          v-model="address"
+          type="text"
+        />
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 <script>
@@ -59,6 +72,7 @@
         cartInfo: [],
         moneyTotal: 0,
         multipleSelection: [],
+        address:'',
       }
     },
     mounted() {
@@ -143,10 +157,37 @@
         }
       },
       submitBtn: function (){
-        // for(let [index,cart] of this.cartInfo.entries()){
-        //   this.cartInfo[index].tot
-        // }
-        // this.cartInfo[]
+        const userId = this.$store.state.userId
+        const instance = this.axios.create({
+          headers: {
+            Authorization: 'Token '+ this.$store.state.token,
+            'Content-Type': 'application/json'
+          },
+        });
+        for(let [index,select] of this.multipleSelection.entries()){
+          instance({
+            url: '/api-order/orders/',
+            data: {
+              amount: this.multipleSelection[index].totalPrice,
+              rating: null,
+              address: this.address,
+              owner: userId,
+              cart: this.multipleSelection[index].id
+            },
+            method: "POST",
+          })
+            .then((response) => {
+              //console.log(response.data);
+              this.$message({
+                message: 'Order placed sussessfully!',
+                type: 'success'
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+              this.$message.error('Please try again.');
+            })
+        }
       }
     }
   }

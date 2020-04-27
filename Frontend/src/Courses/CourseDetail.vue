@@ -99,7 +99,7 @@
           data: {
             number: 1,
             total: this.course[0].price,
-            user: this.$store.state.userId,
+            user: userId,
             course: this.course[0].id,
           },
           method: "post",

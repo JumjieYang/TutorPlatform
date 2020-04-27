@@ -58,7 +58,7 @@
                             </el-image>
                         </el-col>
 
-                        <el-col :span="15" :xs="24">
+                        <el-col :span="12" :xs="24">
                             <p class="text item">
                             {{'Term: ' + course.term}}
                             <br>
