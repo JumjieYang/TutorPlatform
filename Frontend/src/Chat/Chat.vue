@@ -7,7 +7,7 @@ import $ from 'jquery';
 export default {
     data(){
         return{
-            chatRoom: this.$store.state.chatRoom
+            chatRoom: this.$store.state.userId
         }
     },
     methods:{
@@ -21,7 +21,7 @@ export default {
                 text: "Welcome!"
             }, {
                 id: kendo.guid(),
-                name: this.$store.state.chatRoom,
+                name: newChat,
                 iconUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkGsD8I5_HnpduQhd3Spc2fqboGL5wIsnkaZSFdYmSZLcVzrlK&usqp=CAU"
             });
             
@@ -61,28 +61,19 @@ export default {
     },
     mounted(){
         var vm = this
-        var name = 'Admin'
         this.$store.watch(
         (state)=>{
             return this.$store.state.chatRoom
         },
         (newValue, oldValue)=>{
             console.log("chat in chat Updated")
+            var tempChatRoom = this.$store.state.chatRoom
             $("#chat").empty();
-
             vm.chatRoom = newValue
-            vm.axios.get("/api-user/tutor/"+newValue,{
-            headers: {'Authorization': 'Token ' + this.$store.state.token}
-            })
-            .then((response) => {
-                console.log(name)
-                let profile = response.data
-                name = profile.firstName+' '+profile.lastName
-            })
-            this.createSocket(this.$store.state.chatRoom)
-
+            this.createSocket(tempChatRoom)
         },)
-        this.createSocket(this.$store.state.chatRoom, name)
+
+        this.createSocket(this.chatRoom)
 
     }
 }

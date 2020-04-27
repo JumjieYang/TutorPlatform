@@ -121,7 +121,9 @@
           })
       },
       chat(){
-        this.$store.commit('setChatRoom', this.course[0].id)
+        if(!this.$store.state.isTutor){ 
+          this.$store.commit('setChatRoom', this.course[0].tutor)
+        }
       }
     },
   }
