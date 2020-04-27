@@ -58,7 +58,7 @@
                             </el-image>
                         </el-col>
 
-                        <el-col :span="15" :xs="24">
+                        <el-col :span="12" :xs="24">
                             <p class="text item">
                             {{'Term: ' + course.term}}
                             <br>
@@ -109,7 +109,6 @@ export default {
     },
     methods: {
         editCourse(course){
-            //console.log(course.number)
             this.courseId = course.id,
             this.number = course.number,
             this.term = course.term,
@@ -138,7 +137,6 @@ export default {
                     type: 'success'
                 });
                 this.updateCourse()
-                console.log(response.data)
             })
             .catch((error) => {
                 console.log(error);
@@ -168,7 +166,6 @@ export default {
                 method: "PATCH",
             })
             .then((response) => {
-                //console.log(response.data);
                 this.$message({
                     message: 'Edited sussessfully!',
                     type: 'success'
@@ -192,7 +189,6 @@ export default {
                 'Content-Type': 'application/json'
             },
             });
-            //console.log(this.$store.state.userName);
             instance({
                 url: '/api-course/courses/',
                 method: "get",
@@ -203,8 +199,6 @@ export default {
                     if(course.tutor == userId)
                         this.courses.push(course)
                 }
-                //this.courses = response.data
-                console.log(this.courses)
             })
             .catch((error) => {
                 console.log(error);

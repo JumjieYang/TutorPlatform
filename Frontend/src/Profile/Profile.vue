@@ -18,7 +18,7 @@
                 <account-setting/>
               </el-tab-pane> 
 
-              <el-tab-pane v-if="this.$store.state.isTutor!=false" label="Tutor Setting" name="tutorsetting">
+              <el-tab-pane v-if="this.$store.state.isTutor" label="Tutor Setting" name="tutorsetting">
                 <tutor-setting/>
               </el-tab-pane> 
             </el-tabs>
@@ -49,6 +49,26 @@ export default {
       activeTab: 'orderhistory'
     }
   },
+  mounted(){
+    this.axios.get('/api-user/profile/'+this.$store.state.userId+'/',{
+        headers: { 'Authorization' : 'Token '+ this.$store.state.token}
+    })
+    .then((response) => {
+        this.$store.commit('setIsTutor',response.data.isTutor)
+        this.$store.commit('setProfileImage',response.data.image)
+        this.$store.commit('setInfo',{
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            phone: response.data.phoneNumber,
+            age: response.data.age})
+        this.image = this.$store.state.profileImage
+        this.info = this.$store.state.info
+    })
+    .catch((error) => {
+        console.log(error);
+        this.$message.error('Please try again.');
+    })
+    },
   
 }
 </script>

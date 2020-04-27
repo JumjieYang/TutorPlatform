@@ -73,15 +73,17 @@ export default {
         colseCollapseItem(){
         },
         submitCourse(){
-            //this.getCoursePhoto()
+            if(this.number == '' || this.term == '' || this.description ==  ''|| this.price == '' || this.subject == ''){
+                this.$message.error('Please fill all the inputs.')
+                return
+            }
             const userId = this.$store.state.userId
             const instance = this.axios.create({
-            headers: {
-                Authorization: 'Token '+ this.$store.state.token,
-                'Content-Type': 'application/json'
-            },
+                headers: {
+                    Authorization: 'Token '+ this.$store.state.token,
+                    'Content-Type': 'application/json'
+                },
             });
-            //console.log(this.$store.state.userName);
             instance({
                 url: '/api-course/course/',
                 data: {
@@ -97,7 +99,6 @@ export default {
                 method: "post",
             })
             .then((response) => {
-                console.log(response.data);
                 this.$message({
                     message: 'Posted sussessfully!',
                     type: 'success'
@@ -113,7 +114,6 @@ export default {
             this.axios.get("https://api.unsplash.com/photos/random?query=canada&client_id=NgLD4aZRV1pErx3APaS_K9HnLj9QzIEebw3gmF6a2vc")
             .then((response) => {
                 this.image = response.data.urls.regular
-                //console.log(this.image)
                 this.submitCourse()
             })
             .catch((error) => {

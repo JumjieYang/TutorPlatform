@@ -9,5 +9,5 @@ class Profile(models.Model):
     age = models.IntegerField()
     phoneNumber = models.CharField(max_length=10)
     isTutor = models.BooleanField(default=False)
-    image = models.CharField(max_length=10000, null=True)
+    image = models.CharField(max_length=1000000, null=True)
 

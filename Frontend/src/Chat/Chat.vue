@@ -7,6 +7,7 @@ import $ from 'jquery';
 export default {
     mounted: function(){
         var userId = this.$store.state.userId;
+        var userName = this.$store.state.userName;
         $("#chat").kendoChat();
         var chat = $("#chat").data("kendoChat");
         chat.renderMessage({
@@ -20,14 +21,14 @@ export default {
         
         const websock = new WebSocket('ws://localhost:8000/ws/chat/1/');
 
+
         chat.bind("sendMessage", chat_sendMessage);
         function chat_sendMessage(e) {
             const message = {
-                "command": 'new_messgae',
-                'message': {
-                    //'id': str(message.id),
-                    'author': userId,
-                    'content': e.text,
+                command: 'new_message',
+                message: {
+                    author: userId,
+                    text: e.text
                 }
             };
             websock.send(JSON.stringify(message))
@@ -35,11 +36,10 @@ export default {
         
         websock.onmessage = function(e) {
             const message = (JSON.parse(e.data));
-            console.log(message)
             if(message.message.author != userId){
                 chat.renderMessage({
                     type: "text",
-                    text: message.message.content
+                    text: message.message.text
                 },  {
                     //id: kendo.guid(),
                     name: message.message.author,
@@ -66,7 +66,6 @@ export default {
         bottom: 100px;
         box-sizing: border-box;
         box-shadow: 0px 7px 40px 2px rgba(148, 149, 150, 0.1);
-        /* background: white; */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -76,5 +75,6 @@ export default {
         animation-duration: 0.3s;
         animation-timing-function: ease-in-out;
         opacity: 1;
+        z-index: 1000;
     }
 </style>

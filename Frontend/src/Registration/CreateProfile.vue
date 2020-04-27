@@ -1,44 +1,43 @@
 <template>
-  <el-container>
+<el-container>
     <el-header><logo></logo></el-header>
     <el-main>
-      <div class="login-container">
-        <!-- <h4>Please Create your profile</h4> -->
+    <div class="login-container">
         <el-form>
-          <div class="title-container">
+        <div class="title-container">
             <h3 class="title">Please Create your profile</h3>
-          </div>
+        </div>
 
-          <el-form-item id = 'username'>
+        <el-form-item id = 'username'>
             <el-input
-              placeholder="firstName"
-              v-model="firstName"
-              type="text"
+            placeholder="firstName"
+            v-model="firstName"
+            type="text"
             />
-          </el-form-item>
+        </el-form-item>
 
             <el-form-item >
-              <el-input
+            <el-input
                 placeholder="lastName"
                 type="text"
                 v-model="lastName"
-              />
+            />
             </el-form-item>
 
             <el-form-item >
-              <el-input
+            <el-input
                 placeholder="age"
                 type="number"
                 v-model="age"
-              />
+            />
             </el-form-item>
 
             <el-form-item >
-              <el-input
+            <el-input
                 placeholder="phoneNumber"
                 type="number"
                 v-model="phoneNumber"
-              />
+            />
             </el-form-item>
 
             <el-col :span="20" style="text-align: left; margin-bottom:10px;">Become a tutor</el-col>
@@ -50,19 +49,18 @@
 
         </el-form>
         
-      </div>
+    </div>
     </el-main>
     <el-container style="align-self: center">
-      <el-button type="primary" style="width:100%;margin-bottom:30px;"  @click="submit" >Create</el-button>
+    <el-button type="primary" style="width:100%;margin-bottom:30px;"  @click="submit" >Create</el-button>
     </el-container>
-  </el-container>
+</el-container>
 
 </template>
 
 <script>
-  import Logo from '../Home/Logo'
-
-  export default {
+import Logo from '../Home/Logo'
+export default {
     name: 'Homepage',
     components: {
         Logo
@@ -80,7 +78,6 @@
     methods:{
         submit() {
             const userId = this.$store.state.userId
-            //console.log(userId)
             const vm = this;
             const instance = this.axios.create({
             headers: {
@@ -97,12 +94,10 @@
                     age: this.age,
                     phoneNumber: this.phoneNumber,
                     isTutor: this.isTutor,
-                    //image: ...,
                 },
                 method: "POST",
             })
             .then(function (response) {
-                console.log(response);
                 vm.$router.push('/Home')
                 vm.$message({
                     message: 'Created sussessfully!',
@@ -115,6 +110,5 @@
             });
         },
     },
-
-  }
+}
 </script>

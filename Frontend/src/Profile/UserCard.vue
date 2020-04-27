@@ -6,10 +6,10 @@
 
     <div class="user-profile">
     <div class="box-center">
-        <div class="block"><el-avatar :size="50" ></el-avatar></div>
+        <div class="block"><el-avatar :src="this.image" :size="50" ></el-avatar></div>
     </div> 
     <div class="box-center">
-        <div class="user-name text-center">{{this.name}}</div>
+        <div class="user-name text-center">{{this.info.firstName}} {{this.info.lastName}}</div>
     </div>
     </div>
 
@@ -20,9 +20,9 @@
         </div>
         <div>
         <div class="text-muted">
-            {{'Age: '+this.age}}
+            {{'Age: '+this.info.age}}
             <br>
-            {{'Phone: '+this.phoneNumber}}
+            {{'Phone: '+this.info.phone}}
         </div>
         </div>
     </div>
@@ -34,28 +34,31 @@
 export default {
     data() {
         return {
-            username: this.$store.state.userName,
-            name: '',
-            age:'',
-            phoneNumber:''
+            image: '',
+            info: ''
         }
     },
     mounted(){
-    this.axios.get('/api-user/profile/'+this.$store.state.userId+'/',{
-        headers: { 'Authorization' : 'Token '+ this.$store.state.token}
-    })
-    .then((response) => {
-        //console.log(response.data)
-        this.name = response.data.firstName+' '+response.data.lastName
-        this.age = response.data.age
-        this.phoneNumber = response.data.phoneNumber
-        this.$store.commit('setIsTutor',response.data.isTutor)
-    })
-    .catch((error) => {
-        console.log(error);
-        this.$message.error('Please try again.');
-    })
-}
+        this.$store.watch(
+            (state)=>{
+                return this.$store.state.info
+            },
+            (newValue, oldValue)=>{
+                console.log("info Updated")
+                this.info = newValue
+        },)
+
+        this.$store.watch(
+            (state)=>{
+                return this.$store.state.profileImage
+            },
+            (newValue, oldValue)=>{
+                console.log("image Updated")
+                this.image = newValue
+            },
+        )
+    }
+
 }
 </script>
 

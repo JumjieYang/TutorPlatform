@@ -1,96 +1,96 @@
 
 <template>
-  <el-container>
+<el-container>
     <el-header><logo></logo></el-header>
     <el-main>
-      <div class="login-container">
+    <div class="login-container">
         <h4>McGill Tutor Platform</h4>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/SignUp' }"><i class = 'el-icon-thumb'></i>Sign Up</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/SignUp' }"><i class = 'el-icon-thumb'></i>Sign Up</el-breadcrumb-item>
         </el-breadcrumb>
 
         <el-form>
-          <div class="title-container">
+        <div class="title-container">
             <h3 class="title">Login page</h3>
-          </div>
+        </div>
 
-          <el-form-item>
+        <el-form-item>
             <el-input
-              placeholder="Username"
-              v-model="username"
-              type="text"
+            placeholder="Username"
+            v-model="username"
+            type="text"
             />
-          </el-form-item>
+        </el-form-item>
 
-          <el-tooltip placement="right" manual>
+        <el-tooltip placement="right" manual>
             <el-form-item v-if="visible">
-              <el-input type="password" v-model="password" placeholder="Password">
+            <el-input type="password" v-model="password" placeholder="Password">
                 <i slot="suffix" title="show pass" @click="showPass('show')" style="cursor:pointer;"
-                   class="el-icon-view"></i>
-              </el-input>
+                class="el-icon-view"></i>
+            </el-input>
             </el-form-item>
             <el-form-item v-else>
-              <el-input
+            <el-input
                 placeholder="Password"
                 v-model="password">
                 <i slot="suffix" title="hide pass" @click="showPass('hide')" style="cursor:pointer;"
-                   class="el-icon-view"></i>
-              </el-input>
+                class="el-icon-view"></i>
+            </el-input>
             </el-form-item>
-          </el-tooltip>
+        </el-tooltip>
         </el-form>
-      </div>
+    </div>
     </el-main>
     <el-container style="align-self: center">
-      <el-button type="primary" size="large" @click="submit">login</el-button>
+    <el-button type="primary" size="large" @click="submit">login</el-button>
     </el-container>
-  </el-container>
+</el-container>
 
 </template>
 
 <script>
-  import Logo from '../Home/Logo'
-  import router from './../router/index'
-  export default {
+import Logo from '../Home/Logo'
+import router from './../router/index'
+export default {
     name: 'Homepage',
     components: {
-      Logo
+    Logo
     },
     data() {
-      return {
+    return {
         username: '',
         password: '',
         activeIndex: '1',
         activeIndex2: '1',
         visible: true
-      };
+    };
     },
     methods:{
-      submit() {
+    submit() {
         const vm = this;
         this.$store.dispatch('retrieveToken',  {
-          username: this.username,
-          password: this.password
+        username: this.username,
+        password: this.password
         })
-          .then(function (response) {
+        .then(function (response) {
             vm.$router.push('/Home')
             vm.$message({
                 message: 'Login Succeed!',
                 type: 'success'
             });
-          })
-          .catch(function (error) {
+        })
+        .catch(function (error) {
             vm.$message.error('Please try again.');
-          });
-      },
-      validateEmail(email){
+        });
+    },
+    validateEmail(email){
         let re = /\S+@\S+\.\S+/;
         return re.test(email);
-      },
-      showPass(value) {
+    },
+    showPass(value) {
         this.visible = !(value === 'show');
-      },
+    },
     }
-  }
+}
 
 </script>

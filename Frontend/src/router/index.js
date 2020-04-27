@@ -12,7 +12,6 @@ import ShoppingCart from '@/Courses/ShopingCart'
 import CourseDetail from "../Courses/CourseDetail";
 import aboutUs from "../Home/aboutUs";
 import CreateProfile from '@/Registration/CreateProfile'
-import Chat from "../Chat/Chat";
 import Pay from "../Pay/Pay";
 
 Vue.use(Router)
@@ -106,11 +105,6 @@ export default new Router({
       path: '/courseDetail',
       name: 'CourseDetail',
       component: CourseDetail
-    },
-    {
-      path: '/chat',
-      name: 'Chat',
-      component: Chat
     },
     {
       path:'/pay',

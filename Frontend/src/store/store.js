@@ -11,6 +11,13 @@ export const store = new Vuex.Store({
         token: localStorage.getItem('token') || null,
         userId: localStorage.getItem('userId') || null,
         userName: localStorage.getItem('userName') || null,
+        profileImage:'',
+        info: {
+            firstName: '',
+            lastName: '',
+            phone: '',
+            age: ''
+        }
     },
     getters:{
         loggedIn(state){
@@ -35,7 +42,13 @@ export const store = new Vuex.Store({
         },
         setIsTutor(state, isTutor){
             state.isTutor = isTutor
-            console.log("store " + state.isTutor)
+            console.log("store is tutor "+isTutor)        
+        },
+        setProfileImage(state, profileImage){
+            state.profileImage = profileImage
+        },
+        setInfo(state, info){
+            state.info = info
         }
     },
     actions: {

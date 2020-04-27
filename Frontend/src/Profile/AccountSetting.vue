@@ -1,7 +1,6 @@
 <template>
     <div>
         <el-collapse v-model="activeNames" accordion>
-
             <el-collapse-item title="Edit info" name="1">
                 <el-card class="box-card">
                     <el-form class="reset-password" style="margin-top:10px;">
@@ -35,7 +34,6 @@
                     <el-button class="reset-password" type="primary" style="width:50%; margin-bottom:10px;"  @click="submitInfo">submit</el-button>
                 </el-card>
             </el-collapse-item>
-
             <el-collapse-item title="Reset password" name="2">
                 <el-card class="box-card">
                     <el-form class="reset-password" style="margin-top:10px;">
@@ -49,25 +47,27 @@
                     <el-button class="reset-password" type="primary" style="width:50%; margin-bottom:10px;"  @click="submitReset">submit</el-button>
                 </el-card>
             </el-collapse-item>
-
             <el-collapse-item title="Change Profile Photo" name="4">
                 <el-col :span="12">
-                    <input type="file" @click="sendFile">
-                    <el-upload
-                        class="avatar-uploader"
-                        action="https://jsonplaceholder.typicode.com/posts/"
-                        :show-file-list="false"
-                        :http-request="sendFile"
-                        :on-success="handleAvatarSuccess"
-                        :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
+                    <label class="fileContainer">
+                        Click here to select an image!
+                        <input 
+                            type="file" 
+                            @change="loadImage" aria-label="File browser example"
+                            style="
+                            cursor: inherit;
+                            display: block;
+                            filter: alpha(opacity=0);
+                            opacity: 0;
+                            right: 0;
+                            text-align: right;
+                            top: 0;
+                            border: 1px"/>
+                    </label>
+                    <el-button @click="sendImage" style="margin-bottom:10px">Send</el-button>
                 </el-col>
-                <el-col :span="12" style="text-align: left; margin-bottom:10px;">Slect a photo</el-col>
+                <el-col :span="12"></el-col>
             </el-collapse-item>
-
-
             <el-collapse-item title="Role setting" name="5">
                 <el-col :span="20" style="text-align: left; margin-bottom:10px;">Become a tutor</el-col>
                 <el-col :span="4">
@@ -91,11 +91,8 @@
                     >
                      <el-button size="mini" slot="reference">Yes</el-button>
                     </el-popconfirm>
-
                 </el-col>
             </el-collapse-item>
-
-
         </el-collapse>
     </div>
 </template>
@@ -111,60 +108,60 @@ export default {
             lastName: '',
             phoneNumber: '',
             age:'',
-            becomeTutor:this.$store.state.isTutor,
             activeNames: ['0'],
             imageUrl: '',
-            file: null
+            file: null,
+            buttonEnabled: false,
+            becomeTutor: this.$store.state.isTutor,
         }
     },
     methods: {
-        sendFile(){
-            console.log(this.file)
-            const userId = this.$store.state.userId
-            const instance = this.axios.create({
-            headers: {
-                Authorization: 'Token '+ this.$store.state.token,
-                'Content-Type': 'application/json'
-            },
-            });
-            instance({
-                url: '/api-user/profile/' + userId + '/',
-                data: {
-                    user: ""+userId,
-                    image: this.file,
-                },
-                method: "PATCH",
-            })
-            .then((response) => {
-                console.log(response.data);
-                this.$message({
-                    message: 'Sussess!',
-                    type: 'success'
-                });
-                this.activeNames = ['0'];
-            })
-            .catch((error) => {
-                console.log("file "+error);
-                this.$message.error('Please try again.');
-            })
-        },
-        handleAvatarSuccess(res, file) {
-            this.imageUrl = URL.createObjectURL(file.raw);
-            this.file = file.raw
-            //console.log(file.raw)
-
-        },
-        beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
-            const isLt2M = file.size / 1024 / 1024 < 2;
-
-            if (!isJPG) {
-            this.$message.error('Pic can only be jpg format!');
+        sendImage(){
+            if(!this.buttonEnabled){
+                this.$message.error('Please select an image.');
             }
-            if (!isLt2M) {
-            this.$message.error('Pic size cannot be larger than 2MB!');
+            else{
+                const userId = this.$store.state.userId
+                var reader = new FileReader();
+                reader.readAsBinaryString(this.file);
+                const vm = this
+                reader.onload = function() {
+                    console.log('data:image/jpeg;base64,'+btoa(reader.result));
+                    const instance = vm.axios.create({
+                    headers: {
+                        Authorization: 'Token '+ vm.$store.state.token,
+                        'Content-Type': 'application/json'
+                    },
+                    });
+                    instance({
+                        url: '/api-user/profile/' + userId + '/',
+                        data: {
+                            user: ""+userId,
+                            image:  'data:image/jpeg;base64,'+ btoa(reader.result)
+                        },
+                        method: "PATCH",
+                    })
+                    .then((response) => {
+                        vm.$store.commit('setProfileImage', 'data:image/jpeg;base64,'+ btoa(reader.result))
+                        vm.$message({
+                            message: 'Sussess!',
+                            type: 'success'
+                        });
+                        vm.activeNames = ['0'];
+                    })
+                    .catch((error) => {
+                        vm.$message.error('Please try again.');
+                    })
+                };
+                reader.onerror = function() {
+                    console.log('there are some problems');
+                    vm.$message.error('Please try again.');
+                };
             }
-            return isJPG && isLt2M;
+        },
+        loadImage(file){
+            this.buttonEnabled = true
+            this.file = file.target.files[0] || file.dataTransfer.files[0]
         },
         logOut(){
             this.$store.dispatch('signOut')
@@ -175,7 +172,6 @@ export default {
             headers: {
                 Authorization: 'Token '+ this.$store.state.token,
                 'Content-Type': 'application/json'
-
             },
             });
             instance({
@@ -187,19 +183,25 @@ export default {
                     age: this.age,
                     phoneNumber: this.phoneNumber
                 },
-                method: "put",
+                method: "PATCH",
             })
             .then((response) => {
-                console.log(response.data);
                 this.$message({
                     message: 'Sussess!',
                     type: 'success'
                 });
+                this.$store.commit('setInfo',{
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    phone: this.phoneNumber,
+                    age: this.age
+                })
                 this.activeNames = ['0'];
                 this.firstName = ''
                 this.lastName = ''
                 this.age = ''
                 this.phoneNumber = ''
+
             })
             .catch((error) => {
                 console.log(error);
@@ -214,7 +216,6 @@ export default {
                 'Content-Type': 'application/json'
             },
             });
-            console.log(this.$store.state.userName);
             instance({
                 url: '/api-user/users/' + userId ,
                 data: {
@@ -247,7 +248,10 @@ export default {
         }
     },
     mounted(){
-
+        var vm = this
+        setTimeout(function(){
+            vm.becomeTutor = vm.$store.state.isTutor            
+        }, 2000);
     },
     watch: {
         becomeTutor: function () {
@@ -267,16 +271,11 @@ export default {
                 method: "PATCH",
             })
             .then((response) => {
-                console.log(response.data);
-                this.$message({
-                    message: 'Sussess!',
-                    type: 'success'
-                });
                 this.$store.commit('setIsTutor', this.becomeTutor)
                 this.activeNames = ['0'];
             })
             .catch((error) => {
-                console.log("file "+error);
+                console.log(error);
                 this.$message.error('Please try again.');
             })
         }
@@ -309,4 +308,6 @@ export default {
     height: 100px;
     display: block;
 }
+
+
 </style>

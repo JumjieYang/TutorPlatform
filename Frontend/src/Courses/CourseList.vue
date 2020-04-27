@@ -109,7 +109,6 @@
             console.log(error);
             this.$message.error('Course loading encountered a problem.');
           })
-        //this.displayList = this.courses;
       },
       castTutorName(){
         for(let course of this.courses){
