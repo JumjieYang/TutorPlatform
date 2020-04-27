@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state:{
-        chatList: [''],
+        chatRoom: 1,
         isTutor: false,
         token: localStorage.getItem('token') || null,
         userId: localStorage.getItem('userId') || null,
@@ -42,13 +42,16 @@ export const store = new Vuex.Store({
         },
         setIsTutor(state, isTutor){
             state.isTutor = isTutor
-            console.log("store is tutor "+isTutor)        
         },
         setProfileImage(state, profileImage){
             state.profileImage = profileImage
         },
         setInfo(state, info){
             state.info = info
+        },
+        setChatRoom(state, chatRoom){
+            state.chatRoom = chatRoom
+            console.log("store chat updated")
         }
     },
     actions: {

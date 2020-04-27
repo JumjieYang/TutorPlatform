@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
 import Profile from '@/Profile/Profile'
 import Login from '@/Registration/LogIn'
 import SignUp from '@/Registration/SignUp'
@@ -18,14 +17,6 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'Hello',
-      component: Hello,
-      meta: {
-        requiresAuth: true,
-      }
-    },
     {
       path: '/Profile',
       name: 'Profile',

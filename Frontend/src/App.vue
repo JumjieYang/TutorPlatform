@@ -74,6 +74,7 @@ export default {
    box-shadow: none;
    transition: box-shadow 0.2s ease-in-out;
    cursor: pointer;
+   z-index: 1000;
  }
  .sc-launcher:before {
    content: '';

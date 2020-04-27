@@ -44,7 +44,6 @@ export default {
                 return this.$store.state.info
             },
             (newValue, oldValue)=>{
-                console.log("info Updated")
                 this.info = newValue
         },)
 
@@ -53,7 +52,6 @@ export default {
                 return this.$store.state.profileImage
             },
             (newValue, oldValue)=>{
-                console.log("image Updated")
                 this.image = newValue
             },
         )

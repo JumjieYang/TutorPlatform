@@ -1,56 +1,88 @@
 <template>
-    <div id="chat" class="chat"></div>
+    <div id="chat" class="chat" ></div>
 </template>
 
 <script>
 import $ from 'jquery';
 export default {
-    mounted: function(){
-        var userId = this.$store.state.userId;
-        var userName = this.$store.state.userName;
-        $("#chat").kendoChat();
-        var chat = $("#chat").data("kendoChat");
-        chat.renderMessage({
-            type: "text",
-            text: "Welcome to TP"
-        }, {
-            id: kendo.guid(),
-            name: "Big brother",
-            iconUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkGsD8I5_HnpduQhd3Spc2fqboGL5wIsnkaZSFdYmSZLcVzrlK&usqp=CAU"
-        });
-        
-        const websock = new WebSocket('ws://localhost:8000/ws/chat/1/');
+    data(){
+        return{
+            chatRoom: this.$store.state.chatRoom
+        }
+    },
+    methods:{
+        createSocket(newChat){
+            var userId = this.$store.state.userId;
+            var userName = this.$store.state.userName;
+            $("#chat").kendoChat();
+            var chat = $("#chat").data("kendoChat");
+            chat.renderMessage({
+                type: "text",
+                text: "Welcome!"
+            }, {
+                id: kendo.guid(),
+                name: this.$store.state.chatRoom,
+                iconUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkGsD8I5_HnpduQhd3Spc2fqboGL5wIsnkaZSFdYmSZLcVzrlK&usqp=CAU"
+            });
+            
+            const websock = new WebSocket('ws://localhost:8000/ws/chat/'+newChat+'/');
+            console.log("socket")
 
-
-        chat.bind("sendMessage", chat_sendMessage);
-        function chat_sendMessage(e) {
-            const message = {
-                command: 'new_message',
-                message: {
-                    author: userId,
-                    text: e.text
+            chat.bind("sendMessage", chat_sendMessage);
+            function chat_sendMessage(e) {
+                const message = {
+                    command: 'new_message',
+                    message: {
+                        author: userId,
+                        text: e.text
+                    }
+                };
+                websock.send(JSON.stringify(message))
+            }
+            
+            websock.onmessage = function(e) {
+                const message = (JSON.parse(e.data));
+                if(message.message.author != userId){
+                    chat.renderMessage({
+                        type: "text",
+                        text: message.message.text
+                    },  {
+                        //id: kendo.guid(),
+                        name: message.message.author,
+                        iconUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkGsD8I5_HnpduQhd3Spc2fqboGL5wIsnkaZSFdYmSZLcVzrlK&usqp=CAU"
+                    });
                 }
             };
-            websock.send(JSON.stringify(message))
-        }
-        
-        websock.onmessage = function(e) {
-            const message = (JSON.parse(e.data));
-            if(message.message.author != userId){
-                chat.renderMessage({
-                    type: "text",
-                    text: message.message.text
-                },  {
-                    //id: kendo.guid(),
-                    name: message.message.author,
-                    iconUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQkGsD8I5_HnpduQhd3Spc2fqboGL5wIsnkaZSFdYmSZLcVzrlK&usqp=CAU"
-                });
-            }
-        };
 
-        websock.onclose = function(e) {
-            console.error('websock  closed unexpectedly');
-        };
+            websock.onclose = function(e) {
+                console.error('websock  closed unexpectedly');
+            };
+        }
+    },
+    mounted(){
+        var vm = this
+        var name = 'Admin'
+        this.$store.watch(
+        (state)=>{
+            return this.$store.state.chatRoom
+        },
+        (newValue, oldValue)=>{
+            console.log("chat in chat Updated")
+
+            vm.chatRoom = newValue
+            vm.axios.get("/api-user/tutor/"+newValue,{
+            headers: {'Authorization': 'Token ' + this.$store.state.token}
+            })
+            .then((response) => {
+                console.log(name)
+                let profile = response.data
+                name = profile.firstName+' '+profile.lastName
+            })
+                        
+            this.createSocket(this.$store.state.chatRoom)
+
+        },)
+        this.createSocket(this.$store.state.chatRoom, name)
 
     }
 }
