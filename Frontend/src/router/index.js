@@ -74,6 +74,14 @@ export default new Router({
       }
     },
     {
+      path: '/',
+      name: 'HomePage',
+      component: HomePage,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
       path: '/aboutUs',
       name: 'aboutUs',
       component: aboutUs,

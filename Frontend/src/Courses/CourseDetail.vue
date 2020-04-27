@@ -121,7 +121,7 @@
           })
       },
       chat(){
-        this.$router.push({path: '/chat'})
+        this.$store.commit('setChatRoom', this.course[0].id)
       }
     },
   }

@@ -68,6 +68,7 @@ export default {
         },
         (newValue, oldValue)=>{
             console.log("chat in chat Updated")
+            $("#chat").empty();
 
             vm.chatRoom = newValue
             vm.axios.get("/api-user/tutor/"+newValue,{
@@ -78,7 +79,6 @@ export default {
                 let profile = response.data
                 name = profile.firstName+' '+profile.lastName
             })
-                        
             this.createSocket(this.$store.state.chatRoom)
 
         },)
