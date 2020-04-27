@@ -94,7 +94,7 @@
                 'value': course.subject + '' + course.number,
                 'tutor': course.tutor, 'rating': course.rating, 'id': course.id
               }
-              this.axios.get("/api-user/profile/"+courseInfo.tutor+'/',{
+              this.axios.get("/api-user/tutor/"+courseInfo.tutor,{
                 headers: {'Authorization': 'Token ' + this.$store.state.token}
               })
                 .then((response) => {
