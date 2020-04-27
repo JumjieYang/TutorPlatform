@@ -65,3 +65,6 @@ Then, start the frontend server
 ```
 npm start
 ```
+To initialize the payment UI
+```npm install --save vue-card-payment
+```
