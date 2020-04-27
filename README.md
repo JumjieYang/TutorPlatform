@@ -61,9 +61,17 @@ For frontend, you need to change to frontend directory first
 ```
 cd Frontend
 ```
-Then, start the frontend server
-```
-npm start
-```
 To initialize the payment UI
-```npm install --save vue-card-payment```
+
+```
+npm install --save vue-card-payment
+```
+
+Then, install dependencies
+```
+npm install
+```
+start the frontend server
+```
+npm run dev
+```
